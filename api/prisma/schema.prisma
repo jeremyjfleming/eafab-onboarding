@@ -1,0 +1,164 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id String @id @map("_id") @default(auto()) @db.ObjectId
+  userId Int
+  firstName String
+  lastName String
+  username String @unique
+  position String
+  trainer String
+  accessCode Int  @unique
+}
+
+model Admin {
+  id String @id @map("_id") @default(auto()) @db.ObjectId
+  userId Int
+  userName String
+  password String
+}
+
+model Token {
+  id String  @id @map("_id") @default(auto()) @db.ObjectId
+  isAdmin Boolean
+  userId Int
+  secretKey String
+  expires BigInt
+}
+
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionTwoResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionThreeResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionFourResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionFiveResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionSixResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionSevenResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+type SectionOneResponses {
+  QuestionOne String
+  QuestionTwo String
+  QuestionThree String
+}
+
+type FormResponse {
+  date String
+  signatureId String
+}
+

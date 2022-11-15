@@ -35,7 +35,7 @@
 
     <script>
       if (process === undefined) {
-        var process = { env: {} };
+        var process = { env: {PRODUCTION: true} };
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
