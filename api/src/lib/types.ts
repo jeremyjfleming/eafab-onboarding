@@ -18,8 +18,8 @@ export interface Token {
     id: Number;
     isAdmin: Boolean;
     userId: Number;
-    secretKey: String;
-    expires: Date; 
+    secretKey: string;
+    expires: string; 
 }
 
 export interface Cookie {

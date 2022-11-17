@@ -4,7 +4,7 @@ import { ROLES } from 'src/lib/types';
 import { PrismaClient } from '@prisma/client'
 import type { Response } from 'express';
 import * as utils from "src/lib/utils"
-import DateTime from "luxon"
+import { DateTime } from "luxon"
 
 const prisma = new PrismaClient()
 
@@ -12,11 +12,10 @@ const prisma = new PrismaClient()
 export class SigninController {
     @Get("/eafab/signin")
     async signin(@Req() request: Request, @Res() response: Response): Promise<Response> {
-        let data: Employee | Admin;
-        try { // if the data we receive doesnt match the format in these data types, the request is invalid
-            data = await request.json()
-        }
-        catch(e) {
+
+        let data = await request.json();
+
+        if (!(data.hasOwnProperty("username")) || !(data.hasOwnProperty("accessCode") ^ data.hasOwnProperty("password"))) { // make sure we have the fields we need 
             throw new HttpException("Bad Request", HttpStatus.BAD_REQUEST);
         }
 
@@ -40,8 +39,9 @@ export class SigninController {
                     isAdmin: true,
                     userId: admin.userId,
                     secretKey: secretKey,
-                    expires: DateTime.now().plus({minutes: 30})
+                    expires: DateTime.now().plus({minutes: 30}).toISO()
                 })
+                response.setHeader("Authorization:", admin.userId + ":" + secretKey)
             }
             if (mode = ROLES.USER)
             {
@@ -58,9 +58,9 @@ export class SigninController {
                     isAdmin: false,
                     userId: employee.userId,
                     secretKey: secretKey,
-                    expires: DateTime.now().plus({minutes: 30})
+                    expires: DateTime.now().plus({minutes: 30}).toISO()
                 })
-                response.setHeader("Authorization:", secretKey)
+                response.setHeader("Authorization:", employee.userId + ":" + secretKey)
             }
 
         } catch (e) {

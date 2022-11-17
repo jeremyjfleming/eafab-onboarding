@@ -4,10 +4,11 @@ import { AppService } from './app.service';
 import { EmployeeController } from './employee/employee.controller';
 import { SigninController } from './signin/signin.controller';
 import { AdminController } from './admin/admin.controller';
+import { SignoutController } from './signout/signout.controller';
 
 @Module({
   imports: [],
-  controllers: [AppController, EmployeeController, SigninController, AdminController],
+  controllers: [AppController, EmployeeController, SigninController, AdminController, SignoutController],
   providers: [AppService],
 })
 export class AppModule {}
