@@ -3,7 +3,9 @@ export interface Employee {
     userId: Number;
     firstName: String;
     lastName: String;
-    username:String;
+    username: String;
+    position: string;
+    formResponses: FormResponse;
     accessCode: Number;
 }
 
@@ -31,3 +33,18 @@ export enum ROLES {
     USER,
     ADMIN
 }
+
+
+export interface SectionResponses {
+    questionOne: string
+    questionTwo: string
+    questionThree: string
+    summary: string
+}
+  
+export interface FormResponse {
+    date: string
+    sectionRepsonses: SectionResponses[]
+    signatureId: string
+}
+  

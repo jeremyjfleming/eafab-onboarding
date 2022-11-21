@@ -1,16 +1,16 @@
 import { Controller, Get, HttpException, HttpStatus, Req, Res } from '@nestjs/common';
-import type { Employee, Admin } from 'src/lib/types';
-import { ROLES } from 'src/lib/types';
+import type { Employee, Admin } from 'lib/types';
+import { ROLES } from 'lib/types';
 import { PrismaClient } from '@prisma/client'
 import type { Response } from 'express';
-import * as utils from "src/lib/utils"
+import * as utils from "lib/utils"
 import { DateTime } from "luxon"
 
 const prisma = new PrismaClient()
 
 @Controller('signin')
 export class SigninController {
-    @Get("/eafab/signin")
+    @Get("")
     async signin(@Req() request: Request, @Res() response: Response): Promise<Response> {
 
         let data = await request.json();

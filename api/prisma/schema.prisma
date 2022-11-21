@@ -11,10 +11,10 @@ datasource db {
 }
 
 type SectionResponses {
-  QuestionOne String
-  QuestionTwo String
-  QuestionThree String
-  Summary String
+  questionOne String
+  questionTwo String
+  questionThree String
+  summary String
 }
 
 type FormResponse {
@@ -30,7 +30,6 @@ model Employee {
   firstName String
   lastName String
   username String @unique
-  position String
   trainer String
   formResponses FormResponse
   accessCode Int  @unique

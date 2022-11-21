@@ -1,15 +1,19 @@
-import { Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Req } from '@nestjs/common';
-import * as utils from "src/lib/utils"
-import type { Employee } from "src/lib/types"
-import { ROLES } from 'src/lib/types';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Req } from '@nestjs/common';
+import * as utils from "lib/utils"
+import type { Employee } from "lib/types"
+import { ROLES } from 'lib/types';
 import { PrismaClient } from '@prisma/client';
+import { CreateEmployeeDTO, UpdateEmployeeAsAdminDTO } from 'lib/dtos';
 
 let prisma = new PrismaClient()
+
 
 @Controller('employee')
 export class EmployeeController {
 
-    @Get("/eafab/employee/:id")
+
+
+    @Get("/:id")
     async getOneEmployee(@Param() param, @Req() request: Request): Promise<Employee> {
         
         prisma.$connect()
@@ -30,7 +34,7 @@ export class EmployeeController {
         return employee;
     }
 
-    @Get("/eafab/employee")
+    @Get()
     async getEmployees(@Req() request: Request): Promise<Employee[]> {
         
         prisma.$connect()
@@ -47,39 +51,35 @@ export class EmployeeController {
         return employees;
     }
 
-    @Put("/eafab/employee/:id")
-    async putEmployee(@Param() param, @Req() request: Request): Promise<void> {
+    @Put(":id")
+    async putEmployee0 (@Param() param, @Req() request: Request, @Body() body) {
+        prisma.$connect();
+        utils.checkAuthStatus(prisma, request)
+    }
+    async putEmployee(@Param() param, @Req() request: Request, @Body() body: UpdateEmployeeAsAdminDTO): Promise<void> {
 
-        let data = await request.json()
         prisma.$connect()
         let mode: ROLES = await utils.checkAuthStatus(prisma, request);
-
-        if (data.hasOwnProperty("accessCode") || data.hasOwnProperty("id") || data.hasOwnProperty("userId")) {
-            throw new HttpException("Bad request. These attributes cannot be modified", HttpStatus.BAD_REQUEST);
-        }
-
-        if (mode == ROLES.ADMIN && data.hasOwnProperty("formReponses"))
-            throw new HttpException("Admins cannot modify this attribute.", HttpStatus.FORBIDDEN);
-
-        if (mode == ROLES.USER && (data.hasOwnProperty("firstName") || data.hasOwnProperty("lastName") || data.hasOwnProperty("username") || data.hasOwnProperty("trainer") || data.hasOwnProperty("position"))) {
-            throw new HttpException("Employees cannot modify this attribute.", HttpStatus.FORBIDDEN);
-        }
         try {
             prisma.employee.update({
                 where: {
                     userId: param.id,
                 },
-                data: data
+                data: body
             })
         } catch (e) {
             throw new HttpException("Bad request", HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Post("/eafab/employee")
-    async postEmployee(@Req() request: Request): Promise<void> {
+    @Post()
+    async postEmployee(@Req() request: Request, @Body() body: CreateEmployeeDTO): Promise<void> {
 
-        let data = await request.json()
+        let data: any = CreateEmployeeDTO;   
+
+        data.accessCode = utils.makeId(6);
+        data.username = body.lastName.toLowerCase() + data.firstName()[0].toLowerCase() + utils.makeId(3);
+
         prisma.$connect();
         let mode: ROLES = await utils.checkAuthStatus(prisma, request);
 
@@ -95,7 +95,7 @@ export class EmployeeController {
         }
     }
 
-    @Delete("eafab/employee/:id")
+    @Delete(":id")
     async deleteEmployee(@Param() param, @Req() request: Request): Promise<void> {
         let data = await request.json()
         prisma.$connect();
