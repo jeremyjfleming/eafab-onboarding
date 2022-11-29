@@ -3,9 +3,9 @@
   import { Router, Route } from "svelte-routing";
 
   // Admin Layout
+  import Login from "./layouts/Login.svelte";
+  
   import Admin from "./layouts/Admin.svelte";
-  // Auth Layout
-  import Auth from "./layouts/Auth.svelte";
 
   // No Layout Pages
   import Index from "./views/Index.svelte";
@@ -17,9 +17,14 @@
 
 <Router url="{url}">
   <!-- admin layout -->
+  <Route path="admin/login">
+    <Login location="admin"/>
+  </Route>
   <Route path="admin/*admin" component="{Admin}" />
   <!-- auth layout -->
-  <Route path="auth/*auth" component="{Auth}" />
+  <Route path="login">
+    <Login location="user"/>
+  </Route>
   <!-- no layout pages -->
   <Route path="landing" component="{Landing}" />
   <Route path="profile" component="{Profile}" />

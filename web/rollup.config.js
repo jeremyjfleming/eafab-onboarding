@@ -56,7 +56,7 @@ const indexTemplate = `<!--
       href="/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
     />
     <link rel="stylesheet" href="/assets/styles/tailwind.css" />
-    <title>Notus Svelte</title>
+    <title>EAFab Digital Form Completion </title>
 
     <script>
       if (process === undefined) {
@@ -84,19 +84,19 @@ if (production) {
     "./public/index.html",
     indexTemplate
       .replace("<<process-env-status>>", "PRODUCTION: true")
-      .replace(/<<live-preview-link>>/g, "/notus-svelte")
+      .replace(/<<live-preview-link>>/g, "")
   );
   fs.writeFileSync(
     "./public/200.html",
     indexTemplate
       .replace("<<process-env-status>>", "PRODUCTION: true")
-      .replace(/<<live-preview-link>>/g, "/notus-svelte")
+      .replace(/<<live-preview-link>>/g, "")
   );
   fs.writeFileSync(
     "./public/404.html",
     indexTemplate
       .replace("<<process-env-status>>", "PRODUCTION: true")
-      .replace(/<<live-preview-link>>/g, "/notus-svelte")
+      .replace(/<<live-preview-link>>/g, "")
   );
 } else {
   fs.writeFileSync(
@@ -154,13 +154,13 @@ export default {
   },
   plugins: [
     svelte({
-      // enable run-time checks when not in production
-      dev: !production,
-      // we'll extract any component CSS out into
-      // a separate file - better for performance
-      css: (css) => {
-        css.write("bundle.css");
+      compilerOptions: {
+        css: true,
+        dev: !production,
+        cssOutputFilename: "bundle.css"
       },
+
+      emitCss: false
     }),
 
     // If you have external dependencies installed from

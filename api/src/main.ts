@@ -7,7 +7,6 @@ async function bootstrap() {
   app.enableCors({
     origin: "eafab.digisignonline.com"
   })
-  app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
 bootstrap();
