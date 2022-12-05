@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus } from "@nestjs/common";
+import { HttpException, HttpStatus, Redirect } from "@nestjs/common";
 import { PrismaClient } from "@prisma/client";
 import { DateTime } from "luxon";
 import { Cookie, ROLES, Token } from "lib/types"
@@ -41,19 +41,21 @@ export async function checkAuthStatus(prisma: PrismaClient, request: Request): P
         }
     } catch (e)
     {
-        throw new HttpException("Not authorized", HttpStatus.FORBIDDEN);   
+        // throw new HttpException("Not authorized", HttpStatus.FORBIDDEN);
+        request.headers.get("Origin") == "http://"   
     }
 
     return token.isAdmin ? ROLES.ADMIN : ROLES.USER;
 }
 
-export async function checkIdStatus(prisma: PrismaClient, userId: string): Promise<ROLES> {
+export async function checkIdStatus(prisma: PrismaClient, userId: string, secretKey: string): Promise<ROLES> {
     let token: Token;
 
     try {
         token = await prisma.token.findUnique({
             where: {
                 userId: userId,
+                secretKey: secretKey
             }
         })
 

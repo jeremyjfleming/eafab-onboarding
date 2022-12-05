@@ -23,25 +23,7 @@ const aliases = alias({
   ],
 });
 
-const indexTemplate = `<!--
-
-=========================================================
-* Notus Svelte - v1.1.0 based on Tailwind Starter Kit by Creative Tim
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/notus-svelte
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/notus-svelte/blob/main/LICENSE.md)
-
-* Tailwind Starter Kit Page: https://www.creative-tim.com/learning-lab/tailwind-starter-kit/presentation
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
--->
+const indexTemplate = `
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -50,7 +32,9 @@ const indexTemplate = `<!--
 
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon.png" />
+    <!--
     <link rel="stylesheet" href="/build/bundle.css" />
+    -->
     <link
       rel="stylesheet"
       href="/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
@@ -63,14 +47,13 @@ const indexTemplate = `<!--
         var process = { env: {<<process-env-status>>} };
       }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
     <script defer src="<<live-preview-link>>/build/bundle.js"></script>
   </head>
 
   <body class="text-blueGray-700 antialiased">
     <noscript>
       <strong
-        >We're sorry but notus-svelte doesn't work properly without
+        >We're sorry but this app doesn't work properly without
         JavaScript enabled. Please enable it to continue.</strong
       >
     </noscript>

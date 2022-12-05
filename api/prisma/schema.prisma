@@ -33,6 +33,7 @@ model Employee {
   trainer String
   formResponses FormResponse
   accessCode Int  @unique
+  submitted Boolean
 }
 
 model Admin {

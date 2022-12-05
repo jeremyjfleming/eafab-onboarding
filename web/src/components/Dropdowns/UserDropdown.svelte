@@ -4,7 +4,7 @@
 
   // core components
 
-  const image = "../assets/img/team-1-800x800.jpg";
+  const image = "../assets/img/usericon.jpg";
 
   let dropdownPopoverShow = false;
 
@@ -48,29 +48,16 @@
     class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 {dropdownPopoverShow ? 'block':'hidden'}"
   >
     <a
-      href="#pablo" on:click={(e) => e.preventDefault()}
+      href="/settings" on:click={(e) => e.preventDefault()}
       class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
     >
-      Action
+      Settings
     </a>
     <a
-      href="#pablo" on:click={(e) => e.preventDefault()}
+      href="#" on:click={(e) => fetch("//api.digisignonline.com/eafab/signout").then()}
       class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
     >
-      Another action
-    </a>
-    <a
-      href="#pablo" on:click={(e) => e.preventDefault()}
-      class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-    >
-      Something else here
-    </a>
-    <div class="h-0 my-2 border border-solid border-blueGray-100" />
-    <a
-      href="#pablo" on:click={(e) => e.preventDefault()}
-      class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-    >
-      Seprated link
+      Logout
     </a>
   </div>
 </div>

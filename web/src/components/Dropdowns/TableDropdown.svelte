@@ -39,19 +39,19 @@
       href="#pablo" on:click={(e) => e.preventDefault()}
       class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
     >
-      Action
+      View Response Data
     </a>
     <a
       href="#pablo" on:click={(e) => e.preventDefault()}
       class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
     >
-      Another action
+      Download Response Data
     </a>
     <a
       href="#pablo" on:click={(e) => e.preventDefault()}
       class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
     >
-      Something else here
+      Delete User
     </a>
   </div>
 </div>

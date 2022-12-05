@@ -23,13 +23,13 @@
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                 for="grid-email"
               >
-                UserID
+                User ID
               </label>
               <input
                 id="grid-email"
                 type="text"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                placeholder="UserID"
+                placeholder="User ID"
               />
             </div>
 

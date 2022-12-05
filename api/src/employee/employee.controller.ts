@@ -4,6 +4,7 @@ import type { Employee } from "lib/types"
 import { ROLES } from 'lib/types';
 import { PrismaClient } from '@prisma/client';
 import { CreateEmployeeDTO, UpdateEmployeeAsAdminDTO } from 'lib/dtos';
+import { DateTime } from 'luxon';
 
 let prisma = new PrismaClient()
 
@@ -34,8 +35,8 @@ export class EmployeeController {
         return employee;
     }
 
-    @Get()
-    async getEmployees(@Req() request: Request): Promise<Employee[]> {
+    @Get("/:count")
+    async getEmployees(@Param() param, @Req() request: Request): Promise<Employee[]> {
         
         prisma.$connect()
         utils.checkAuthStatus(prisma, request);
@@ -43,7 +44,22 @@ export class EmployeeController {
         let employees: Employee[]
         
         try {
-            employees = await prisma.employee.findMany()
+            employees = await prisma.employee.findMany({
+               where: {
+                    submitted: false
+               }
+            })
+
+            employees.push(await prisma.employee.findMany({
+                where: {
+                    submitted: true
+                },
+                orderBy: {
+                    date: 
+                },
+                cursor: 
+                take: 25
+            }))
         } catch (e) {
             throw new HttpException("Couldn't find employee", HttpStatus.NOT_FOUND)
         }

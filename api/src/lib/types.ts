@@ -7,6 +7,7 @@ export interface Employee {
     position: string;
     formResponses: FormResponse;
     accessCode: Number;
+    submitted: Boolean;
 }
 
 export interface Admin {

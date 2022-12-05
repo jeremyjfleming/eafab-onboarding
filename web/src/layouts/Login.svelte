@@ -3,7 +3,6 @@
 
   // components for this layout
   import AuthNavbar from "components/Navbars/AuthNavbar.svelte";
-  import FooterSmall from "components/Footers/FooterSmall.svelte";
 
   // pages for this layout
   import AdminLogin from "views/admin/Login.svelte";
@@ -11,6 +10,8 @@
 
 
   const registerBg2 = "../assets/img/AnimatedShape.svg";
+  const registerBg1 = "../assets/img/AnimatedShapeAdmin.svg";
+
   export let location;
   export let auth = "";
 </script>
@@ -19,13 +20,18 @@
   <AuthNavbar />
   <main>
     <section class="relative w-full h-full py-40 min-h-screen">
+      
+      {#if location == "admin"}
+      <div
+        class="absolute top-0 w-full h-full bg-blueGray-800 bg-no-repeat bg-full"
+        style="background-image: url({registerBg1});"
+      ></div>
+        <AdminLogin/>
+      {:else}
       <div
         class="absolute top-0 w-full h-full bg-blueGray-800 bg-no-repeat bg-full"
         style="background-image: url({registerBg2});"
       ></div>
-      {#if location == "admin"}
-        <AdminLogin/>
-      {:else}
         <UserLogin/>
       {/if}
     </section>
