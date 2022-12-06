@@ -50,6 +50,7 @@
     "@rollup/plugin-alias": "3.1.2",
     "chart.js": "2.9.4",
     "semver": "^7.3.8",
+    "signature_pad": "^4.1.4",
     "sirv-cli": "1.0.11",
     "storybook": "^6.5.13",
     "svelte-routing": "^1.6.0"

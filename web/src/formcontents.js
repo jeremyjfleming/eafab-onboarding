@@ -26,48 +26,81 @@ export let questions = [
 ]
 
 export let sections = [`
-<p>1.0 SAFETY AND HEALTH POLICY STATEMENT</p>
-
-<p>We provide a safe and healthful environment for employees and customers, protecting the public, and preserving EAFab<br />
-Corporation assets and property.<br />
-At EAFab Corporation our most valuable resources are the people who work for us. Injuries can be prevented. To achieve this<br />
-objective, EAFab Corporation will make all reasonable efforts to comply with all government regulations pertaining to safety and<br />
-health issues. An effective Safety and Health Program will be carried out throughout our organization.<br />
-The Safety and Health Program will assist management and non-supervisory employees in controlling hazards and risks which<br />
-will minimize employee and customer injuries, damage to customer&rsquo;s property and damage or destruction of EAFab Corporation<br />
-property.<br />
-All employees will follow this program. This program is designed to encourage all employees to promote the safety of their fellow<br />
-employees and customers. To accomplish our safety and health goals, all members of management are responsible and<br />
-accountable for implementing this policy, and to insure it is followed.<br />
-EAFab Corporation is sincerely interested in the employee&rsquo;s safety. The policy of EAFab Corporation is to provide safe<br />
-equipment, adequate tools and training, and the necessary protective equipment.<br />
-It is the employee&rsquo;s responsibility to follow the rules of safety as established for their protection and the protection of others, and<br />
-to use the protective devices, which EAFab Corporation provides.</p>
-`,
-`
-<p>2.0 SAFETY EDUCATION AND TRAINING PROGRAM<br />
-EAFab Corporation is committed to instructing all employees in safe and healthy work practices and to provide training to each<br />
-employee with regard to general, acceptable, safety procedures and to any hazards or safety procedure(s) that is specific to<br />
-that employee&rsquo;s work situation.<br />
-Purpose of a Hazard Communication Program is to provide employees with the knowledge and training necessary to understand<br />
-and protect themselves and others from the chemicals they use and to comply with the OSHA Hazard Communication Standard<br />
-(1910.1200).<br />
-Training will occur when<br />
-&bull; There is a new hiring<br />
-&bull; EAFab Corporation believes additional training is warranted<br />
-&bull; EAFab Corporation is made aware of a new hazard<br />
-Training Areas<br />
-Employee training will consist of new employee orientation, periodic group meetings, and one- on-one training. The Safety and<br />
-Health training provided to employees will include:<br />
-&bull; EAFab Corporation Safety and Health Policies<br />
-&bull; EAFab Corporation Safety and Health Program Incident Reporting<br />
-&bull; Hazard Communication<br />
-&bull; Hazardous Material Spill Response<br />
-&bull; Personal Protective Equipment requirements<br />
-&bull; Emergency Procedures<br />
-&bull; Housekeeping<br />
-Training Documentation<br />
-Employee Training will be documented using the FORM 2.0.1</p>
+<li data-list-text="1.0" style="margin: 0;padding: 0;text-indent: 0;display: block;">
+        <h1 style="padding-top: 4pt;padding-left: 28pt;text-indent: -22pt;text-align: left;margin: 0;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: bold;text-decoration: none;font-size: 14pt;">Safety and Health Policy Statement</h1>
+        <p style="text-indent: 0pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">
+          <br style="margin: 0;padding: 0;text-indent: 0;">
+        </p>
+        <p style="padding-left: 6pt;text-indent: 0pt;line-height: 114%;text-align: justify;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">We provide a safe and healthful environment for employees and customers, protecting the public, and preserving EAFab Corporation assets and property.</p>
+        <p style="text-indent: 0pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">
+          <br style="margin: 0;padding: 0;text-indent: 0;">
+        </p>
+        <p style="padding-left: 6pt;text-indent: 0pt;line-height: 115%;text-align: justify;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">At EAFab Corporation our most valuable resources are the people who work for us. Injuries can be prevented. To achieve this objective, EAFab Corporation will make all reasonable efforts to comply with all government regulations pertaining to safety and health issues. An effective Safety and Health Program will be carried out throughout our organization.</p>
+        <p style="padding-top: 9pt;padding-left: 6pt;text-indent: 0pt;line-height: 114%;text-align: justify;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">The Safety and Health Program will assist management and non-supervisory employees in controlling hazards and risks which will minimize employee and customer injuries, damage to customer’s property and damage or destruction of EAFab Corporation property.</p>
+        <p style="text-indent: 0pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">
+          <br style="margin: 0;padding: 0;text-indent: 0;">
+        </p>
+        <p style="padding-left: 6pt;text-indent: 0pt;line-height: 114%;text-align: justify;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">All employees will follow this program. This program is designed to encourage all employees to promote the safety of their fellow employees and customers. To accomplish our safety and health goals, all members of management are responsible and accountable for implementing this policy, and to insure it is followed.</p>
+        <p style="text-indent: 0pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">
+          <br style="margin: 0;padding: 0;text-indent: 0;">
+        </p>
+        <p style="padding-left: 6pt;text-indent: 0pt;line-height: 115%;text-align: justify;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">EAFab Corporation is sincerely interested in the employee’s safety. The policy of EAFab Corporation is to provide safe equipment, adequate tools and training, and the necessary protective equipment.</p>
+        <p style="text-indent: 0pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">
+          <br style="margin: 0;padding: 0;text-indent: 0;">
+        </p>
+        <p style="padding-left: 6pt;text-indent: 0pt;line-height: 114%;text-align: justify;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">It is the employee’s responsibility to follow the rules of safety as established for their protection and the protection of others, and to use the protective devices, which EAFab Corporation provides.</p>
+      </li>
+      <li data-list-text="2.0" style="margin: 0;padding: 0;text-indent: 0;display: block;">
+        <h1 style="padding-top: 4pt;padding-left: 28pt;text-indent: -22pt;text-align: left;margin: 0;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: bold;text-decoration: none;font-size: 14pt;">
+          <a name="bookmark1" style="margin: 0;padding: 0;text-indent: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">S</a>
+          <span class="h3" style="margin: 0;padding: 0;text-indent: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: bold;text-decoration: none;font-size: 11pt;">AFETY </span>E <span class="h3" style="margin: 0;padding: 0;text-indent: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: bold;text-decoration: none;font-size: 11pt;">DUCATION AND </span>T <span class="h3" style="margin: 0;padding: 0;text-indent: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: bold;text-decoration: none;font-size: 11pt;">RAINING </span>P <span class="h3" style="margin: 0;padding: 0;text-indent: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: bold;text-decoration: none;font-size: 11pt;">ROGRAM</span>
+        </h1>
+        <p style="padding-top: 8pt;padding-left: 6pt;text-indent: 0pt;line-height: 114%;text-align: justify;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">EAFab Corporation is committed to instructing all employees in safe and healthy work practices and to provide training to each employee with regard to general, acceptable, safety procedures and to any hazards or safety procedure(s) that is specific to that employee’s work situation.</p>
+        <p style="text-indent: 0pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">
+          <br style="margin: 0;padding: 0;text-indent: 0;">
+        </p>
+        <p style="padding-left: 6pt;text-indent: 0pt;line-height: 115%;text-align: justify;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">Purpose of a Hazard Communication Program is to provide employees with the knowledge and training necessary to understand and protect themselves and others from the chemicals they use and to comply with the OSHA Hazard Communication Standard (1910.1200).</p>
+        <p class="s1" style="padding-top: 9pt;padding-left: 6pt;text-indent: 0pt;text-align: justify;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: underline;font-size: 10pt;">Training will occur when</p>
+        <p style="text-indent: 0pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">
+          <br style="margin: 0;padding: 0;text-indent: 0;">
+        </p>
+        <ul id="l3" style="margin: 0;padding: 0;text-indent: 0;padding-left: 0pt;">
+          <li data-list-text="" style="margin: 0;padding: 0;text-indent: 0;display: block;">
+            <p style="padding-left: 42pt;text-indent: -18pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">There is a new hiring</p>
+          </li>
+          <li data-list-text="" style="margin: 0;padding: 0;text-indent: 0;display: block;">
+            <p style="padding-top: 1pt;padding-left: 42pt;text-indent: -18pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">EAFab Corporation believes additional training is warranted</p>
+          </li>
+          <li data-list-text="" style="margin: 0;padding: 0;text-indent: 0;display: block;">
+            <p style="padding-top: 1pt;padding-left: 6pt;text-indent: 18pt;line-height: 195%;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">EAFab Corporation is made aware of a new hazard <u style="margin: 0;padding: 0;text-indent: 0;">Training Areas</u>
+            </p>
+            <p style="padding-left: 6pt;text-indent: 0pt;line-height: 115%;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">Employee training will consist of new employee orientation, periodic group meetings, and one- on-one training. The Safety and Health training provided to employees will include:</p>
+          </li>
+          <li data-list-text="" style="margin: 0;padding: 0;text-indent: 0;display: block;">
+            <p style="padding-top: 9pt;padding-left: 42pt;text-indent: -18pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">EAFab Corporation Safety and Health Policies</p>
+          </li>
+          <li data-list-text="" style="margin: 0;padding: 0;text-indent: 0;display: block;">
+            <p style="padding-top: 1pt;padding-left: 42pt;text-indent: -18pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">EAFab Corporation Safety and Health Program Incident Reporting</p>
+          </li>
+          <li data-list-text="" style="margin: 0;padding: 0;text-indent: 0;display: block;">
+            <p style="padding-top: 1pt;padding-left: 42pt;text-indent: -18pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">Hazard Communication</p>
+          </li>
+          <li data-list-text="" style="margin: 0;padding: 0;text-indent: 0;display: block;">
+            <p style="padding-top: 1pt;padding-left: 42pt;text-indent: -18pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">Hazardous Material Spill Response</p>
+          </li>
+          <li data-list-text="" style="margin: 0;padding: 0;text-indent: 0;display: block;">
+            <p style="padding-top: 1pt;padding-left: 42pt;text-indent: -18pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">Personal Protective Equipment requirements</p>
+          </li>
+          <li data-list-text="" style="margin: 0;padding: 0;text-indent: 0;display: block;">
+            <p style="padding-top: 1pt;padding-left: 42pt;text-indent: -18pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">Emergency Procedures</p>
+          </li>
+          <li data-list-text="" style="margin: 0;padding: 0;text-indent: 0;display: block;">
+            <p style="padding-top: 1pt;padding-left: 6pt;text-indent: 18pt;line-height: 195%;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">Housekeeping <u style="margin: 0;padding: 0;text-indent: 0;">Training Documentation</u>
+            </p>
+            <p style="padding-left: 6pt;text-indent: 0pt;text-align: left;margin: 0pt;padding: 0;color: black;font-family: Arial, sans-serif;font-style: normal;font-weight: normal;text-decoration: none;font-size: 10pt;">Employee Training will be documented using the FORM 2.0.1</p>
+          </li>
+        </ul>
+      </li>
 `,
 `
 <p>3.0 SAFETY AND HEALTH COMMUNICATION</p>
@@ -3167,6 +3200,5 @@ DESCRIPTION OF UNSAFE CONDITION OR PRACTICE</p>
 <p>SUGGESTION FOR IMPROVING SAFETY:</p>
 
 <p>DRAW A PICTURE TO DESCRIBE SITUATION</p>
-`,
 `
 ]
