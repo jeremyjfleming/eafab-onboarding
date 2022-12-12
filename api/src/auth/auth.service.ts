@@ -4,7 +4,6 @@ import { Admin, Employee, Prisma } from '@prisma/client';
 import { AdminService } from 'admin/admin.service';
 import { EmployeeService } from 'employee/employee.service';
 import { JwtResponse, ROLES } from 'lib/types';
-import { Roles } from 'roles/roles.decorator';
 import * as bcrypt from "bcryptjs"
 
 @Injectable()
@@ -15,19 +14,23 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async validateUser(username: string, password: string): Promise<Partial<Employee | Admin>> {
+  async validateUser(username: string, password: string): Promise<Partial<(Employee | Admin) & { role: ROLES }>> {
     const user = await this.employeeService.getOneEmployee({username});
     if (user && user.accessCode === password) {
-      const { accessCode, ...result } = user;
-      return result;
+      const { accessCode, ...result} = user;
+      let final: Partial<Employee & { role: ROLES }> = result;
+      final.role = ROLES.USER;
+      if (user.submitted)
+        return null;
+      return final;
     }
     const admin = await this.adminService.getOneAdmin(username);
     if (admin) {
-      const saltOrRounds = 10;
-      const hash = await bcrypt.hash(password, saltOrRounds);
-      if (await bcrypt.compare(password, hash)) {
+      if (await bcrypt.compare(password, admin.password)) {
         const { password, ...result } = admin;
-        return result
+        let final: Partial<Admin & { role: ROLES }> = result;
+        final.role = ROLES.ADMIN;
+        return final;
       }
     }
     return null;

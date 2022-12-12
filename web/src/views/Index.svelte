@@ -14,23 +14,22 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
   let confirmWindow;
 
 
-  // check authorization. this is only to redirect if no session is in place. api still needs these keys for subsequent requests
-  // if (sessionStorage.getItem("userId") == null || sessionStorage.getItem("secretKey") == null) {
+  // // check authorization. this is only to redirect if no session is in place. api still needs these keys for subsequent requests
+  // if (!localStorage.getItem("token")) {
   //   window.location = "/login"
   // }
-  // fetch("//api.digisignonline.com/eafab/employee/getauth/user", {
-  //   body: {
-  //     userId: sessionStorage.getItem("userId"),
-  //     secretKey: sessionStorage.getItem("secretKey")
+  // fetch("//api.digisignonline.com/eafab/auth/user/status", {
+  //   headers: {
+  //     "Authorization": "Bearer " + localStorage.getItem("token")
   //   }
   // }).then((value) => {
-  //   if (value.status == 400) {
+  //   if (value.status !== 200) {
   //     window.location = "/login"
   //   }
   // }) 
 
 
-  let authHeader = sessionStorage.getItem("userId") + ":" + sessionStorage.getItem("secretKey");
+  let authHeader = "Bearer " + localStorage.getItem("token")
 
   $: {
     for (let i = 0; i < 24; i++) {
@@ -48,7 +47,7 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
   
   onMount(async () => {
     try {
-      let value = await fetch("//api.digisignonline.com/eafab/employee/" + sessionStorage.getItem("userId"), {
+      let value = await fetch("//api.eafabsafety.com/employee/" + sessionStorage.getItem("userId"), {
         headers: {
           "Authorization": authHeader
         }
@@ -73,7 +72,7 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
 
   let socket;
   try {
-    socket = new WebSocket("ws://api.digisignonline.com/eafab/employee")
+    socket = new WebSocket("ws://api.eafabsafety.com/employee")
   } catch (e) {
     // throw popup
   }
@@ -95,8 +94,6 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
     }
 
     socket.send(JSON.stringify({
-      userId: sessionStorage.getItem("userId"),
-      secretKey: sessionStorage.getItem("secretKey"),
       formResponses: sectionResponses
     }))
   }
@@ -144,9 +141,9 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
 </script>
 
 <div>
-  <div class="absolute bg-blueGray-100 w-full {opacity ? "opacity-50" : ""}">
+  <div class="absolute bg-blueGray-100 w-full">
     <IndexNavbar />
-    <div class="relative bg-blueGray-800 md:pt-32 pb-32 pt-12 px-4 md:px-10 mx-auto w-full"/>
+    <div class="relative bg-blueGray-800{ opacity ? "/90" : ""} md:pt-32 pb-32 pt-12 px-4 md:px-10 mx-auto w-full"/>
     <div class="px-4 md:px-10 mx-auto w-full -m-24">
       <div class="flex flex-wrap mt-4">
         <div class="w-full mb-12 px-4">
@@ -208,12 +205,12 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
                         <button class="shadow-sm hover:shadow-lg hover:ease-in rounded ml-auto text-white bg-blueGray-800 w-16 h-10" on:click={() => step++}>Next</button>
                         {:else}
                         <button class="shadow-sm hover:shadow-lg rounded text-white bg-blueGray-800 w-16 h-10" on:click={() => {
-                          if (!checkErrorsOnAllSteps()) {
-                            confirmWindow.show();
-                            opacity = true;
-                          }
-                          // confirmWindow.show();
-                          // opacity = true;
+                          // if (!checkErrorsOnAllSteps()) {
+                          //   confirmWindow.show();
+                          //   opacity = true;
+                          // }
+                          confirmWindow.show();
+                          opacity = true;
 
                         }}>Submit</button>
                         {/if}
@@ -230,8 +227,6 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
                     }}>Cancel</button>
                     <button class="shadow-sm hover:shadow-lg hover:ease-in rounded text-white bg-blueGray-800 w-16 h-10" on:click={() => {
                       socket.send(JSON.stringify({
-                        userId: sessionStorage.getItem("userId"),
-                        secretKey: sessionStorage.getItem("secretKey"),
                         isSubmitted: true
                       }))
                     }}>Submit</button>

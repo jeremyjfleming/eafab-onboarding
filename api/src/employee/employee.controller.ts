@@ -26,7 +26,7 @@ export class EmployeeController {
     @Get("/complete/:cursor")
     async getCompleteEmployees(@Param() param, @Req() request: Request): Promise<Partial<Employee>[]> {
         
-        return await this.employeeService.getManyCompleteResponses(param.cursor)
+        return await this.employeeService.getManyCompleteResponses(param.cursor || 0)
     }
 
     @UseGuards(JwtAuthGuard)
@@ -34,7 +34,7 @@ export class EmployeeController {
     @Get("/incomplete/:cursor")
     async getInCompleteEmployees(@Param() param, @Req() request: Request): Promise<Partial<Employee>[]> {
         
-        return await this.employeeService.getManyIncompleteResponses(param.cursor)
+        return await this.employeeService.getManyIncompleteResponses(param.cursor || 0)
     }
 
     @UseGuards(JwtAuthGuard)

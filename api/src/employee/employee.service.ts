@@ -26,6 +26,9 @@ export class EmployeeService {
             return null;
         }
 
+        if (employee == null)
+            return employee;
+
         let {accessCode, ...result} = employee
         return result;
     }

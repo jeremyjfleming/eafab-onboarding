@@ -5,6 +5,33 @@
   const github = "../assets/img/github.svg";
   const google = "../assets/img/google.svg";
   export let location;
+
+  async function formSubmit(e) {
+    e.preventDefault();
+
+    let response 
+    try {
+      response = await fetch(e.target.action, {
+          method: 'POST',
+          body: new URLSearchParams(new FormData(e.target))
+      }) 
+    } catch (e) {
+        // network error
+    }
+
+    if (response.status == 401)
+    {
+      // invalid user or pwd
+    } else if (response.status !== 200)
+    {
+      // something else
+    }
+
+    localStorage.setItem("tokem", (await response.json()).access_token)
+    window.location = "/";
+  }
+
+
 </script>
 
 <div class="container mx-auto px-4 h-full">
@@ -17,7 +44,7 @@
           <div class="text-blueGray-400 text-center mb-3 font-bold mt-6">
             <h3>Sign in with your credentials</h3>
           </div>
-          <form method="post" action="//api.digisignonline.com/eafab/signin">
+          <form method="post" action="//api.eafabsafety.com/signin" on:submit={formSubmit}>
             <div class="relative w-full mb-3">
               <label
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
