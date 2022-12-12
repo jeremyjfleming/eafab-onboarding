@@ -79,6 +79,7 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
   }
 
   let errors = new Array(24).fill("").map(() => new Array(4).fill(""));
+  let padEmpty;
 
   console.log(errors);
 
@@ -119,6 +120,13 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
           errors[section][field] = "This field cannot be empty"
         }
       }
+    }
+
+    // check for signature empty
+    if (pad.isEmpty())
+    {
+      error = true;
+      padEmpty = true;
     }
     return error;
   }
@@ -165,7 +173,11 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
                   {:else}
                     <h3>Affirm you agree to the terms presented by completing your signature</h3>
                   {/if}
-                  <canvas class="{step == 25 ? "block" : "hidden"} border" height="175" width="400" bind:this={signatureCanvas} />
+                  <canvas class="{step == 25 ? "block" : "hidden"} border {padEmpty ? "border-red-600" : ""}" height="175" width="400" on:click={() => {
+                    if (!pad.isEmpty())
+                      padEmpty = false;
+                  }} bind:this={signatureCanvas} />
+                  <small class="{step == 25 && padEmpty ? "block" : "hidden"} text-red-600">Please complete your signature.</small>
                   <div class="flex flex-col w-1/2 gap-8">
                     {#if step !== 25}
                       {#each Array(3) as _, i}
@@ -196,11 +208,12 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
                         <button class="shadow-sm hover:shadow-lg hover:ease-in rounded ml-auto text-white bg-blueGray-800 w-16 h-10" on:click={() => step++}>Next</button>
                         {:else}
                         <button class="shadow-sm hover:shadow-lg rounded text-white bg-blueGray-800 w-16 h-10" on:click={() => {
-                          // if (!checkErrorsOnAllSteps()) {
-                          //   confirmSubission();
-                          // }
-                          confirmWindow.show();
-                          opacity = true;
+                          if (!checkErrorsOnAllSteps()) {
+                            confirmWindow.show();
+                            opacity = true;
+                          }
+                          // confirmWindow.show();
+                          // opacity = true;
 
                         }}>Submit</button>
                         {/if}
@@ -212,7 +225,7 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
                     <h3>Are you sure you want to submit?</h3>
                   <div class="flex flex-row justify-evenly my-6">
                     <button class="rounded border-2 border-blueGray-800 w-16 h-10" on:click={() => {
-                      confirmWindow.hidden = true;
+                      confirmWindow.close();
                       opacity = false;
                     }}>Cancel</button>
                     <button class="shadow-sm hover:shadow-lg hover:ease-in rounded text-white bg-blueGray-800 w-16 h-10" on:click={() => {

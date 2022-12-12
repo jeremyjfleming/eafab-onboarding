@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -26,29 +27,23 @@ type FormResponse {
 
 model Employee {
   id String @id @map("_id") @default(auto()) @db.ObjectId
-  userId Int
+  createId Int @unique
+  userId Int @unique
   firstName String
   lastName String
   username String @unique
-  trainer String
   formResponses FormResponse
-  accessCode Int  @unique
+  accessCode String @unique
   submitted Boolean
+  submitCount Int @unique
 }
 
 model Admin {
   id String @id @map("_id") @default(auto()) @db.ObjectId
-  userId Int
-  userName String
+  userId Int @unique
+  username String @unique
   password String
 }
 
-model Token {
-  id String  @id @map("_id") @default(auto()) @db.ObjectId
-  isAdmin Boolean
-  userId Int
-  secretKey String
-  expires String
-}
 
 

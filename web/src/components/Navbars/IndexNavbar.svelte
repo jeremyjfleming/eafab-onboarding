@@ -18,7 +18,7 @@
     </div>
     <div class="w-1/3 relative text-center">
       <button class="w-8 h-4 text-white">
-        <i class="fas fa-plus text-white text-2xl"></i>      
+        <i class="fas fa-right-from-bracket text-white text-2xl"></i>      
       </button>
     </div>
   </div>

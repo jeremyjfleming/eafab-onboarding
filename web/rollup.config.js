@@ -41,7 +41,8 @@ const indexTemplate = `
     />
     <link rel="stylesheet" href="/assets/styles/tailwind.css" />
     <title>EAFab Digital Form Completion </title>
-
+    
+    <script src="https://kit.fontawesome.com/8382591375.js" crossorigin="anonymous"></script>
     <script>
       if (process === undefined) {
         var process = { env: {<<process-env-status>>} };

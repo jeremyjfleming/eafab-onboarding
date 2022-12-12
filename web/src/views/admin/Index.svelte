@@ -6,7 +6,7 @@
   import CompleteTable from "../../components/Cards/CompleteTable.svelte";
   export let location;
 
-  $: newUser = false;
+  let newUserDialog
   
 
 </script>
@@ -28,16 +28,24 @@
       <CompleteElement firstName="Jeremy" lastName="Fleming"/>
     </CompleteTable>
   </div>
+  <dialog bind:this={newUserDialog} class="border mt-10">
+    <div class="flex flex-col">
+      <div class="flex flex-row justify-between mb-6">
+        <h3>Add a new user</h3>
+        <button><i class="fas fa-xmark w-4 h-4 text-blueGray-700" on:click={() => {
+          newUserDialog.close()
+        }}></i></button>
+      </div>
+      <form action="" class="flex flex-col gap-4">
+        <input class="rounded" type="text" name="firstName" placeholder="First Name">
+        <input class="rounded" type="text" name="lastName" placeholder="Last Name">
+        <button class="shadow-sm hover:shadow-lg rounded text-white bg-blueGray-800 w-16 h-10" type="submit">Submit</button>
+      </form>
+    </div>
+  </dialog>
 </div>
 
-<div class="absolute opacity-30 flex flex-auto flex {newUser ? 'block' : 'hidden'}">
-  <form action="" class="bg">
-    <input type="text" name="firstName" placeholder="First Name">
-    <input type="text" name="lastName" placeholder="Last Name">
-    <button type="submit"></button>
-  </form>
-</div>
 
-<button on:click={(() => newUser = true)} class="fixed bg-blueGray-700 rounded-full text-center w-16 right-0 bottom-0 h-16 mr-3 mb-3 shadow-lg hover:shadow-xl">
-  <i class="fas fa-plus text-white mt-auto text-2xl"></i>
+<button on:click={(() => newUserDialog.show())} class="fixed bg-blueGray-700 rounded-full text-center w-16 right-0 bottom-0 h-16 mr-3 mb-3 shadow-lg hover:shadow-xl">
+  <i class="fa-solid fa-plus text-white mt-auto text-2xl"></i>
 </button>

@@ -933,10 +933,6 @@ select {
   z-index: 10 !important;
 }
 
-.-z-10 {
-  z-index: -10 !important;
-}
-
 .float-left {
   float: left !important;
 }
@@ -1007,6 +1003,10 @@ select {
 
 .mb-12 {
   margin-bottom: 3rem !important;
+}
+
+.mt-10 {
+  margin-top: 2.5rem !important;
 }
 
 .mt-4 {
@@ -1093,16 +1093,16 @@ select {
   height: 0.5rem !important;
 }
 
-.h-16 {
-  height: 4rem !important;
-}
-
 .h-4 {
   height: 1rem !important;
 }
 
 .h-10 {
   height: 2.5rem !important;
+}
+
+.h-16 {
+  height: 4rem !important;
 }
 
 .h-96 {
@@ -1127,6 +1127,10 @@ select {
 
 .w-12 {
   width: 3rem !important;
+}
+
+.w-4 {
+  width: 1rem !important;
 }
 
 .w-16 {
@@ -1249,6 +1253,10 @@ select {
 
 .justify-evenly {
   justify-content: space-evenly !important;
+}
+
+.gap-4 {
+  gap: 1rem !important;
 }
 
 .gap-2 {
@@ -1425,10 +1433,6 @@ select {
 .bg-red-400 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(248 113 113 / var(--tw-bg-opacity)) !important;
-}
-
-.bg-opacity-25 {
-  --tw-bg-opacity: 0.25 !important;
 }
 
 .bg-full {
@@ -1667,16 +1671,12 @@ select {
   color: rgb(203 213 225 / var(--tw-placeholder-opacity)) !important;
 }
 
-.opacity-30 {
-  opacity: 0.3 !important;
+.opacity-100 {
+  opacity: 1 !important;
 }
 
 .opacity-50 {
   opacity: 0.5 !important;
-}
-
-.opacity-100 {
-  opacity: 1 !important;
 }
 
 .shadow {

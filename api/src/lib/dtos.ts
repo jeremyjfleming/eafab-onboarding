@@ -1,47 +1,52 @@
 import { PartialType } from "@nestjs/mapped-types";
-import { IsNotEmpty, Max } from "class-validator";
+import { Type } from "class-transformer";
+import { IsEmpty, isNotEmpty, IsNotEmpty, Max, ValidateNested } from "class-validator";
 
 export class CreateEmployeeDTO {
     
     @IsNotEmpty()
     @Max(20)
-    firstName: string;
+    readonly firstName: string;
 
     @IsNotEmpty()
     @Max(20)
-    lastName: string;
-
-    @IsNotEmpty()
-    @Max(20)
-    position: string;
+    readonly lastName: string;
 }
 
 export class UpdateEmployeeAsAdminDTO extends PartialType(CreateEmployeeDTO) {
     @IsNotEmpty()
     @Max(20)
-    userId: string;
+    readonly userId: number;
 }
 
 export class UpdateEmployeeAsUserDTO {
     @IsNotEmpty()
-    formResponse: FormResponseDTO;
+    // @ValidateNested()
+    // @Type(() => FormResponseDTO)
+    readonly formResponse: string;
 
     @IsNotEmpty()
-    userId: string;
+    readonly userId: number;
 
     @IsNotEmpty()
-    secretKey: string;
+    readonly secretKey: string;
+
+    readonly submitted: boolean;
 }
 
 export class SectionResponseDTO {
-    questionOne: string;
-    questionTwo: string;
-    questionThree: string;
-    summary: string;
+    readonly questionOne: string;
+    readonly questionTwo: string;
+    readonly questionThree: string;
+    readonly summary: string;
 }
 
-export class FormResponseDTO {
-    date: string;
-    signatureid: string;
-    selectionResponses: SectionResponseDTO[];
-}
+// export class FormResponseDTO {
+//     readonly signatureid: string;
+
+//     @ValidateNested()
+//     @Type(() => SectionResponseDTO)
+//     readonly selectionResponses: SectionResponseDTO[];
+
+//     readonly date: string
+// }
