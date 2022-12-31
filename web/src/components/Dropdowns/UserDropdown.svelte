@@ -4,7 +4,7 @@
 
   // core components
 
-  const image = "../assets/img/usericon.jpg";
+  const image = "/assets/img/usericon.jpg";
 
   let dropdownPopoverShow = false;
 
@@ -48,13 +48,16 @@
     class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 {dropdownPopoverShow ? 'block':'hidden'}"
   >
     <a
-      href="/settings" on:click={(e) => e.preventDefault()}
+      href="/admin/settings" on:click={(e) => e.preventDefault()}
       class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
     >
       Settings
     </a>
     <a
-      href="#" on:click={(e) => fetch("//api.digisignonline.com/eafab/signout").then()}
+      href="/admin/login" on:click={() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      }}
       class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
     >
       Logout

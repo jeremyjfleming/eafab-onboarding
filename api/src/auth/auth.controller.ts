@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Request, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request, UnauthorizedException, Post } from '@nestjs/common';
 import { JwtResponse, ROLES } from 'lib/types';
 import { Roles } from 'roles/roles.decorator';
 import { LocalAuthGuard } from './local-auth.guard';
@@ -10,27 +10,26 @@ export class AuthController {
 
     constructor(private authService: AuthService) {}
 
-    @Get("/user/signin")
+    @Post("/user/signin")
     @UseGuards(LocalAuthGuard)
+    @Roles(ROLES.USER)
     async userLogin(@Request() request): Promise<JwtResponse> {
-        if (request.user.role !== ROLES.USER)
-            throw new UnauthorizedException();
         return this.authService.login(request.user);
     }
 
-    @Get("/user/signout")
+    @Post("/user/signout")
     async userLogout(): Promise<void> {
         
     }
 
-    @Get("/admin/signin")
+    @Post("/admin/signin")
+    @UseGuards(LocalAuthGuard)
+    @Roles(ROLES.ADMIN)
     async adminLogin(@Request() request): Promise<JwtResponse> {
-        if (request.user.role !== ROLES.ADMIN)
-            throw new UnauthorizedException();
         return this.authService.login(request.user);
     }
     
-    @Get("/admin/signout")
+    @Post("/admin/signout")
     @UseGuards(LocalAuthGuard)
     async adminLogout(): Promise<void> {
         

@@ -7,6 +7,7 @@
     export let userId = "";
     export let accessCode = ""
     export let completion = 0;
+    export let id = "";
 </script>
 
 <tr>
@@ -50,6 +51,6 @@
     <td
       class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
     >
-      <TableDropdown />
+      <TableDropdown userId="232323" />
     </td>
   </tr>

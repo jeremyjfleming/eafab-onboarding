@@ -5,17 +5,14 @@ import { IsEmpty, isNotEmpty, IsNotEmpty, Max, ValidateNested } from "class-vali
 export class CreateEmployeeDTO {
     
     @IsNotEmpty()
-    @Max(20)
     readonly firstName: string;
 
     @IsNotEmpty()
-    @Max(20)
     readonly lastName: string;
 }
 
 export class UpdateEmployeeAsAdminDTO extends PartialType(CreateEmployeeDTO) {
     @IsNotEmpty()
-    @Max(20)
     readonly userId: number;
 }
 

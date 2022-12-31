@@ -1,0 +1,12 @@
+/node_modules/
+/public/build/
+
+.DS_Store
+
+commit.sh
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+

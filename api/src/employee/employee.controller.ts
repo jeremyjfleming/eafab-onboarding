@@ -6,7 +6,6 @@ import { PrismaClient, Prisma, Employee } from '@prisma/client';
 import { CreateEmployeeDTO, UpdateEmployeeAsAdminDTO } from 'lib/dtos';
 import { DateTime } from 'luxon';
 import { EmployeeService } from './employee.service';
-import { LocalAuthGuard } from 'auth/local-auth.guard';
 import { Roles } from 'roles/roles.decorator';
 import { JwtAuthGuard } from 'auth/jwt-auth.guard';
 
@@ -15,15 +14,10 @@ export class EmployeeController {
 
     constructor(private readonly employeeService: EmployeeService) {}
 
-    @UseGuards(JwtAuthGuard)
-    @Get("/:id")
-    async getOneEmployee(@Param() param, @Req() request: Request): Promise<Partial<Employee>> {
-        return await this.employeeService.getOneEmployee(param.id)
-    }
-
+    
     @UseGuards(JwtAuthGuard)
     @Roles(ROLES.ADMIN)
-    @Get("/complete/:cursor")
+    @Get(["/complete", "/complete/:cursor"])
     async getCompleteEmployees(@Param() param, @Req() request: Request): Promise<Partial<Employee>[]> {
         
         return await this.employeeService.getManyCompleteResponses(param.cursor || 0)
@@ -31,10 +25,16 @@ export class EmployeeController {
 
     @UseGuards(JwtAuthGuard)
     @Roles(ROLES.ADMIN)
-    @Get("/incomplete/:cursor")
+    @Get(["/incomplete/:cursor", "/incomplete"])
     async getInCompleteEmployees(@Param() param, @Req() request: Request): Promise<Partial<Employee>[]> {
-        
-        return await this.employeeService.getManyIncompleteResponses(param.cursor || 0)
+        let employees = await this.employeeService.getManyIncompleteResponses(param.cursor || 0); 
+        return employees
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get("/:id")
+    async getOneEmployee(@Param() param, @Req() request: Request): Promise<Partial<Employee>> {
+        return await this.employeeService.getOneEmployee(param.id)
     }
 
     @UseGuards(JwtAuthGuard)

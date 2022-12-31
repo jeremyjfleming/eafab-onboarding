@@ -1,17 +1,12 @@
 <script>
   import { link } from "svelte-routing";
 
-  // core components
-  const github = "../assets/img/github.svg";
-  const google = "../assets/img/google.svg";
-  export let location;
-
   async function formSubmit(e) {
     e.preventDefault();
 
     let response 
     try {
-      response = await fetch(e.target.action, {
+      response = await fetch("//api.eafabsafety.com/auth/user/signin", {
           method: 'POST',
           body: new URLSearchParams(new FormData(e.target))
       }) 
@@ -27,7 +22,8 @@
       // something else
     }
 
-    localStorage.setItem("tokem", (await response.json()).access_token)
+    localStorage.setItem("token", (await response.json()).access_token);
+    localStorage.setItem("user", (await response.json()).user);
     window.location = "/";
   }
 
@@ -42,9 +38,9 @@
       >
         <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
           <div class="text-blueGray-400 text-center mb-3 font-bold mt-6">
-            <h3>Sign in with your credentials</h3>
+            <h3>Employee Sign-in</h3>
           </div>
-          <form method="post" action="//api.eafabsafety.com/signin" on:submit={formSubmit}>
+          <form on:submit={formSubmit}>
             <div class="relative w-full mb-3">
               <label
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2"

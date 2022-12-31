@@ -3,6 +3,7 @@ import { Prisma, PrismaClient, Employee } from '@prisma/client';
 import { LocalAuthGuard } from 'auth/local-auth.guard';
 import { CreateEmployeeDTO, SectionResponseDTO, UpdateEmployeeAsAdminDTO } from 'lib/dtos';
 import * as utils from 'lib/utils';
+import { DateTime } from "luxon"
 
 
 let prisma = new PrismaClient()
@@ -29,14 +30,21 @@ export class EmployeeService {
         if (employee == null)
             return employee;
 
-        let {accessCode, ...result} = employee
+        let {accessCode, ...result} = employee;
+        result.formResponses.date = this.convertDate(result.formResponses.date);
         return result;
     }
 
-    async getManyIncompleteResponses(cursor: number): Promise<Partial<Employee>[]> {
-        prisma.$connect()
-        // utils.checkAuthStatus(prisma, request);
+    convertDate(isoString: string): string {
+        if (!isoString)
+            return "";
+        let iso = DateTime.fromISO(isoString);
+        return iso.toLocaleString(DateTime.DATETIME_MED);
+    }
 
+    async getManyIncompleteResponses(cursor: number): Promise<Partial<Employee>[]> {
+        // utils.checkAuthStatus(prisma, request);
+        
         let employees: Employee[]
         
         try {
@@ -50,12 +58,12 @@ export class EmployeeService {
                cursor: {
                     createId: cursor
                },
-               take: 25,
-               skip: 1
+               take: 25
             })
         } catch (e) {
             return null;
         }
+
 
         let results = []
         for (let i in employees)
@@ -63,6 +71,7 @@ export class EmployeeService {
             let { accessCode, ...result } = employees[i];
             results[i] = result;
         }
+        
         return results;
     }
 
@@ -83,7 +92,6 @@ export class EmployeeService {
                 cursor: {
                     submitCount: cursor
                 },
-                skip: 1,
                 take: 25
             })
         } catch(e) {
@@ -94,6 +102,7 @@ export class EmployeeService {
         for (let i in employees)
         {
             let { accessCode, ...result } = employees[i];
+            results[i].formResponses.date = this.convertDate(results[i].formResponses.date);
             results[i] = result;
         }
         return results;
@@ -131,19 +140,24 @@ export class EmployeeService {
 
     async createEmployee({firstName, lastName}: {firstName: string, lastName: string}) {
 
-        let employee: Employee
+        let employee: Prisma.EmployeeCreateInput = {
+            createId: await this.getLastCreateId(),
+            userId: utils.makeId(9),
+            firstName: firstName,
+            lastName: lastName,
+            username: lastName.toLowerCase() + firstName[0].toLowerCase() + utils.makeId(3),
+            formResponses: {
+                date: '',
+                signatureId: ''
+            },
+            accessCode: utils.makeId(7).toString(),
+            submitted: false,
+            submitCount: 0
+        }
 
-        employee.lastName = lastName;
-        employee.firstName = firstName;
-        employee.accessCode = utils.makeId(7).toString();
-        employee.username = lastName.toLowerCase() + firstName[0].toLowerCase() + utils.makeId(3);
-        employee.userId = utils.makeId(9)
-
-        prisma.$connect();
-
-
+        
         try {
-            prisma.employee.create({
+            await prisma.employee.create({
                 data: employee
             });
         } catch (e) {

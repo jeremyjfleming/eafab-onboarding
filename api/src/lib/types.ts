@@ -5,4 +5,5 @@ export enum ROLES {
 
 export type JwtResponse = {
     access_token: string
+    user: string
 }

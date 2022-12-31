@@ -35,6 +35,9 @@ module.exports = {
         "2": 2,
         "3": 3,
       },
+      screenLeft: {
+        "nearleft": "94%"
+      },
       inset: {
         "-100": "-100%",
         "-225-px": "-225px",
@@ -53,6 +56,7 @@ module.exports = {
         "260-px": "260px",
       },
       height: {
+        "300": "50rem",
         "95-px": "95px",
         "70-px": "70px",
         "350-px": "350px",

@@ -1,11 +1,13 @@
 <script>
   // library for creating dropdown menu appear on click
   import { createPopper } from "@popperjs/core";
+  import clickOutside from "../../clickOutside";
 
   // core components
 
   let dropdownPopoverShow = false;
 
+  export let userId = "";
   let btnDropdownRef;
   let popoverDropdownRef;
 
@@ -36,7 +38,7 @@
     class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 {dropdownPopoverShow ? 'block':'hidden'}"
   >
     <a
-      href="#pablo" on:click={(e) => e.preventDefault()}
+      href="/admin/employee/{userId}"
       class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
     >
       View Response Data
