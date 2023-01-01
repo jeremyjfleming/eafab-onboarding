@@ -1,0 +1,13 @@
+<script>
+    export let message;
+</script>
+
+<div>
+    {#if message}
+    <div class="absolute top-0 left-0 h-8 z-20 w-full flex flex-row justify-center">
+      <div class="rounded border-2 border-red-600 p-4 mt-4 bg-white">
+        <h3 class="text-red-600">{message}</h3>
+      </div>
+    </div>
+    {/if}
+</div>

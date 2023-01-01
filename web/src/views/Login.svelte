@@ -1,36 +1,52 @@
 <script>
   import { link } from "svelte-routing";
+  import ErrorPopup from "../components/ErrorPopup.svelte";
+
+  let errors = []
+
+  async function setError(message) {
+    errors = [...errors, message];
+    console.log(errors)
+    setTimeout(() => errors.length > 1 ? errors.shift() : errors = [], 3000)
+  }
 
   async function formSubmit(e) {
-    e.preventDefault();
-
     let response 
     try {
-      response = await fetch("//api.eafabsafety.com/auth/user/signin", {
-          method: 'POST',
-          body: new URLSearchParams(new FormData(e.target))
+      response = await fetch("https://api.eafabsafety.com/auth/admin/signin", {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(e.target))
       }) 
     } catch (e) {
-        // network error
+      // console.log(e);
+      setError("Network error. Please try again later")
+      return
     }
+    
+    // console.log(new URLSearchParams(new FormData(e.target)))
 
     if (response.status == 401)
     {
-      // invalid user or pwd
-    } else if (response.status !== 200)
+      setError("Username or password invalid")
+      return
+    } else if (response.status !== 201)
     {
-      // something else
+      setError("Something went wrong, please try again later")
+      return
     }
 
-    localStorage.setItem("token", (await response.json()).access_token);
-    localStorage.setItem("user", (await response.json()).user);
-    window.location = "/";
+    let data = await response.json();
+    localStorage.setItem("token", (data.access_token));
+    localStorage.setItem("user", (data.user));
+    window.location = "/admin";
   }
-
 
 </script>
 
 <div class="container mx-auto px-4 h-full">
+  {#each errors as error}
+    <ErrorPopup message={error}/>  
+  {/each}
   <div class="flex content-center items-center justify-center h-full">
     <div class="w-full lg:w-4/12 px-4">
       <div
@@ -40,7 +56,7 @@
           <div class="text-blueGray-400 text-center mb-3 font-bold mt-6">
             <h3>Employee Sign-in</h3>
           </div>
-          <form on:submit={formSubmit}>
+          <form on:submit|preventDefault={formSubmit}>
             <div class="relative w-full mb-3">
               <label
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2"

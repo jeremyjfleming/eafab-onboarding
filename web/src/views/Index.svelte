@@ -56,20 +56,12 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
   })
 
 
-
-  let socket;
-  try {
-    socket = new WebSocket("ws://api.eafabsafety.com/employee")
-  } catch (e) {
-    // throw popup
-  }
-
   let errors = new Array(24).fill("").map(() => new Array(4).fill(""));
   let padEmpty;
 
   console.log(errors);
 
-  function updateThroughSocket() {
+  async function update() {
 
     let sectionResponses = Array(25).fill({});
 
@@ -80,9 +72,16 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
       sectionResponses[section].summary = responses[section][3];
     }
 
-    socket.send(JSON.stringify({
-      formResponses: sectionResponses
-    }))
+    await fetch("//api.eafabsafety.com/employee/" + localStorage.getItem("user"), {
+      method: "put",
+      headers: { "Authorization": authHeader},
+      body: {
+        formResponses: {
+          signatureId: signatureImage,
+          sectionResponses
+        }
+      }
+    })
   }
 
   function checkErrorsOnAllSteps() {
@@ -219,7 +218,7 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
                               <label for="{step}-{i+1}">{questions[step-1][i]}</label>
                               <textarea class="h-30 rounded {errors[step-1][i] !== "" ? "border-red-600" : ""} resize-none" name="{step}-{i+1}" id="" bind:value={responses[step-1][i]} on:change={() => {
                                 errors[step-1][i] = "";
-                                updateThroughSocket();
+                                update();
                               }}></textarea>
                               <small class="text-red-600 {errors[step-1][i] !== "" ? "block" : "hidden"}">{errors[step-1][i]}</small>
                           </div>
@@ -228,7 +227,7 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
                           <label for="{step}-s">Summary of Section</label>
                           <textarea class="h-30 rounded {errors[step-1][3] !== "" ? "border-red-600" : ""} resize-none" name="{step}-s" id="" bind:value={responses[step-1][3]} on:change={() => {
                             errors[step-1][3] = "";
-                            updateThroughSocket();
+                            update();
                           }}></textarea>
                           <small class="text-red-600 {errors[step-1][3] !== "" ? "block" : "hidden"}">{errors[step-1][3]}</small>
                       </div>
@@ -242,6 +241,7 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
                         <button class="shadow-sm hover:shadow-lg transition-shadow ease-in rounded ml-auto text-white bg-blueGray-800 w-16 h-10" on:click={() => step++}>Next</button>
                         {:else}
                         <button class="shadow-sm hover:shadow-lg transition-shadow ease-in rounded text-white bg-blueGray-800 w-16 h-10" on:click={() => {
+                          update()
                           if (!checkErrorsOnAllSteps()) {
                             confirmWindow.show();
                             opacity = true;

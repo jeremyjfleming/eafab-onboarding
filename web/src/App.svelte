@@ -40,12 +40,16 @@
       if (!value && window.location.pathname !== "/admin/login")
         window.location = "/admin/login"
       }) 
+  } else {
+    checkAuth("user").then((value) => {
+      if (value && window.location.pathname == "/login")
+        window.location = "/"
+    })
+    checkAuth("user").then((value) => {
+      if (!value && window.location.pathname !== "/login")
+        window.location = "/login"
+    })
   }
-
-    if (checkAuth("user") && window.location.pathname == "/login")
-      window.location = "/"
-    if (!checkAuth("user") && window.location.pathname !== "/login")
-      window.location = "/login"
 
 
 </script>

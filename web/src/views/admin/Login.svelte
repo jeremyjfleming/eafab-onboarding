@@ -1,10 +1,13 @@
 <script>
   import { link } from "svelte-routing";
+  import ErrorPopup from "../../components/ErrorPopup.svelte"
 
-  let errors = {
-    popup: "",
-    username: "",
-    password: ""
+  let errors = []
+
+  async function setError(message) {
+    errors = [...errors, message];
+    console.log(errors)
+    setTimeout(() => errors.length > 1 ? errors.shift() : errors = [], 3000)
   }
 
   async function formSubmit(e) {
@@ -16,17 +19,20 @@
       }) 
     } catch (e) {
       // console.log(e);
-      errors.popup = "Network error, please try again later"
+      setError("Network error. Please try again later")
+      return
     }
     
     // console.log(new URLSearchParams(new FormData(e.target)))
 
     if (response.status == 401)
     {
-      errors.popup = "Username or password invalid"
+      setError("Username or password invalid")
+      return
     } else if (response.status !== 201)
     {
-      errors.popup = "Something went wrong, please try again later"
+      setError("Something went wrong, please try again later")
+      return
     }
 
     let data = await response.json();
@@ -34,16 +40,13 @@
     localStorage.setItem("user", (data.user));
     window.location = "/admin";
   }
+
 </script>
 
 <div class="container mx-auto px-4 h-full">
-  {#if errors.popup}
-    <div class="absolute top-0 left-0 h-full z-20 w-full flex flex-row justify-center">
-      <div class="rounded border-2 w-36 h-4 p-4 bg-white">
-        <h3>{errors.popup}</h3>
-      </div>
-    </div>
-  {/if}
+{#each errors as error}
+  <ErrorPopup message={error}/>  
+{/each}
   <div class="flex content-center items-center justify-center h-full">
     <div class="w-full lg:w-4/12 px-4">
       <div

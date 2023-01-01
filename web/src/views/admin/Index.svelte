@@ -14,8 +14,9 @@
     firstName: "",
     lastName: ""
   }
-  let completeEmployees = []
-  let incompleteEmployees = []
+  $: completeEmployees = []
+  $: incompleteEmployees = []
+  let percentages = []
 
   onMount(async () => {
     try {
@@ -32,7 +33,19 @@
       })).json();
     } catch (e) {} 
 
-    console.log(completeEmployees);
+    for (let i = 0; i < incompleteEmployees.length; i++) {
+      let percentageCount = 0
+      for (let section in incompleteEmployees[i].formResponses.sectionResponses) {
+        for (let question in section) {
+          if (section[question] !== "")
+            percentageCount++;
+        }
+        if (incompleteEmployees[i].formResponses.signatureId !== "")
+          percentageCount += 4;
+      }
+      percentages[i] = percentageCount;
+  }
+
   })
 
 
@@ -60,8 +73,9 @@
                 headers: {"Authorization": authHeader },
                 body: new URLSearchParams(addUser)
               }).then((response) => {
+                console.log(response)
                 if (response.ok)
-                  location.reload;
+                  window.location.reload();
               })
             newUserDialog = false;
           }}>Submit</button>
@@ -72,8 +86,8 @@
   <div class="w-full mb-12 px-4">
     <IncompleteTable>
       {#if incompleteEmployees != []}
-        {#each incompleteEmployees as employee}
-          <IncompleteElement firstName={employee.firstName} lastName={employee.lastName} userId={employee.uername} accessCode={employee.accessCode} completion=20 id={employee.userId}/>
+        {#each incompleteEmployees as employee, i}
+          <IncompleteElement firstName={employee.firstName} lastName={employee.lastName} userId={employee.username} accessCode={employee.accessCode} completion={percentages[i]} id={employee.userId}/>
         {/each}
       {/if}
     </IncompleteTable>
