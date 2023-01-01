@@ -1,7 +1,7 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotAcceptableException } from '@nestjs/common';
 import { Prisma, PrismaClient, Employee } from '@prisma/client';
 import { LocalAuthGuard } from 'auth/local-auth.guard';
-import { CreateEmployeeDTO, SectionResponseDTO, UpdateEmployeeAsAdminDTO } from 'lib/dtos';
+import { CreateEmployeeDTO, SectionResponseDTO } from 'lib/dtos';
 import * as utils from 'lib/utils';
 import { DateTime } from "luxon"
 
@@ -13,7 +13,6 @@ export class EmployeeService {
     
     async getOneEmployee(obj: {userId?: number; username?: string}): Promise<Partial<Employee>> {
         
-        prisma.$connect()
         
         // utils.checkAuthStatus(prisma, request);
 
@@ -24,15 +23,16 @@ export class EmployeeService {
                 where: obj
             })
         } catch (e) {
+            console.log(e)
             return null;
         }
+
 
         if (employee == null)
             return employee;
 
-        let {accessCode, ...result} = employee;
-        result.formResponses.date = this.convertDate(result.formResponses.date);
-        return result;
+        employee.formResponses.date = this.convertDate(employee.formResponses.date);
+        return employee;
     }
 
     convertDate(isoString: string): string {
@@ -44,7 +44,7 @@ export class EmployeeService {
 
     async getManyIncompleteResponses(cursor: number): Promise<Partial<Employee>[]> {
         // utils.checkAuthStatus(prisma, request);
-        
+
         let employees: Employee[]
         
         try {
@@ -56,23 +56,15 @@ export class EmployeeService {
                     createId: "desc"
                },
                cursor: {
-                    createId: cursor
+                    createId: await this.getLastCreateId()-1 - cursor
                },
                take: 25
             })
         } catch (e) {
             return null;
         }
-
-
-        let results = []
-        for (let i in employees)
-        {
-            let { accessCode, ...result } = employees[i];
-            results[i] = result;
-        }
         
-        return results;
+        return employees;
     }
 
     async getManyCompleteResponses(cursor: number): Promise<Partial<Employee>[]> {
@@ -90,7 +82,7 @@ export class EmployeeService {
                     submitCount: "desc"
                 },
                 cursor: {
-                    submitCount: cursor
+                    submitCount: await this.getLastSubmitCount(false)-1 - cursor
                 },
                 take: 25
             })
@@ -98,20 +90,41 @@ export class EmployeeService {
             return null;
         }
 
-        let results = []
         for (let i in employees)
         {
-            let { accessCode, ...result } = employees[i];
-            results[i].formResponses.date = this.convertDate(results[i].formResponses.date);
-            results[i] = result;
+            employees[i].formResponses.date = this.convertDate(employees[i].formResponses.date);
         }
-        return results;
+        return employees;
     }
 
     async updateEmployee(userId: number, data: Prisma.EmployeeUpdateInput): Promise<void> {
 
-        prisma.$connect()
-        // let mode: ROLES = await utils.checkAuthStatus(prisma, request);
+        if (data.submitted === true) {
+          // verify all form data is complete
+          let employee = (await prisma.employee.findUnique({
+            where: {
+              userId: userId
+            }
+          }))
+
+
+    
+            for (let i in employee.formResponses.sectionResponses) {
+                for (let entry in employee.formResponses.sectionResponses[i]) {
+                    if (employee.formResponses.sectionResponses[entry] == "")
+                        throw new NotAcceptableException({ error: "All form data not complete"})
+                    }
+            }
+
+            if (employee.formResponses.signatureId == "")
+                throw new NotAcceptableException({ error: "All form data not complete"})
+    
+            let date = DateTime.now().toISO();
+            let submitCount = await this.getLastSubmitCount(false);
+            data.submitCount = submitCount;
+            data.formResponses.date = date;
+        
+        }
         try {
             prisma.employee.update({
                 where: {
@@ -152,7 +165,7 @@ export class EmployeeService {
             },
             accessCode: utils.makeId(7).toString(),
             submitted: false,
-            submitCount: 0
+            submitCount: await this.getLastSubmitCount(true)
         }
 
         
@@ -161,40 +174,40 @@ export class EmployeeService {
                 data: employee
             });
         } catch (e) {
+            console.log(e)
             throw new Error()
         }
     }
 
     async getLastCreateId(): Promise<number> {
         try {
-            let createId = (await prisma.employee.findMany({
+            let employee = (await prisma.employee.findMany({
                 orderBy: {
-                createId: "desc"
+                 createId: "desc"
                 },
                 take: 1
-            }))[0].createId++
-
+            }))[0]
+            let createId = employee.createId+1
             return createId
         } catch (e) {
-            return 0;
+            throw new Error()
         }
     }
 
-    async getLastSubmitCount(): Promise<number> {
+    async getLastSubmitCount(reverse: boolean): Promise<number> {
         try {
-            let submitCount = (await prisma.employee.findMany({
-                where: {
-                  submitted: true
-                },
+            let employee = (await prisma.employee.findMany({
                 orderBy: {
-                  submitCount: "desc"
+                  submitCount: reverse ? "asc" : "desc"
                 },
                 take: 1
-              }))[0].submitCount++
-    
-            return submitCount;
-        } catch (e) {
-            return 0;
+              }))[0]
+
+              let submitCount = reverse ? employee.submitCount-1 : employee.submitCount+1
+              return submitCount;
+              
+            } catch (e) {
+                return 0;
         }
     }
 

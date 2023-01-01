@@ -11,11 +11,6 @@ export class CreateEmployeeDTO {
     readonly lastName: string;
 }
 
-export class UpdateEmployeeAsAdminDTO extends PartialType(CreateEmployeeDTO) {
-    @IsNotEmpty()
-    readonly userId: number;
-}
-
 export class UpdateEmployeeAsUserDTO {
     @IsNotEmpty()
     // @ValidateNested()

@@ -21,7 +21,7 @@ type SectionResponses {
 
 type FormResponse {
   date String
-  sectionRepsonses SectionResponses[]
+  sectionResponses SectionResponses[]
   signatureId String
 }
 
