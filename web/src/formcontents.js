@@ -11,7 +11,7 @@ export let questions = [
     ["Before removing a tag or lock, from whom is approval required?", "Before removing a tag or lock, from whom is approval required?", "Who is responsible for verifying training is complete for this program?"],
     ["Who should potential safety and workplace health hazards be reported to?", "Hazards that do not cause imminent harm are to be abated in how many days?", "How should employees keep their work areas?"],
     ["What must management give warnings of?", "Who will fill out the Liability Report Form in the event of an accident?", "Who is responsible for fixing or repairing items?"],
-    ["Did you read this?", "Did you REALLY read this?", "No lies, did you ACTUALLY read it? Be honest."],
+    ["When might this form be used?", "What is the purpose of this form?", "Who can fill out this form?"],
     ["What are the objectives that the EAP will meet?", "When will training on the EAP take place?", "What action must be taken when a fire is reported?"],
     ["What are reasons that an OSHA Inspection may be conducted?", "What are the steps to be taken when admitting an OSHA officer?", "What are the three parts of the OSHA inspection?"],
     ["What are the four classifications of hazardous chemicals?", "What is the procedure when a hazardous material spill occurs?", "What should employees in contact with hazardous material do?"],
