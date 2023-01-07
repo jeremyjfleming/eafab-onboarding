@@ -1,44 +1,48 @@
 import { PartialType } from "@nestjs/mapped-types";
 import { Type } from "class-transformer";
-import { IsEmpty, isNotEmpty, IsNotEmpty, Max, ValidateNested } from "class-validator";
+import { IsBoolean, IsEmpty, isNotEmpty, IsNotEmpty, IsString, Max, ValidateNested } from "class-validator";
 
 export class CreateEmployeeDTO {
     
     @IsNotEmpty()
+    @IsString()
     readonly firstName: string;
 
     @IsNotEmpty()
+    @IsString()
     readonly lastName: string;
 }
 
-export class UpdateEmployeeAsUserDTO {
-    @IsNotEmpty()
-    // @ValidateNested()
-    // @Type(() => FormResponseDTO)
-    readonly formResponse: string;
-
-    @IsNotEmpty()
-    readonly userId: number;
-
-    @IsNotEmpty()
-    readonly secretKey: string;
-
-    readonly submitted: boolean;
-}
-
 export class SectionResponseDTO {
+
+    @IsString()
     readonly questionOne: string;
+
+    @IsString()
     readonly questionTwo: string;
+
+    @IsString()
     readonly questionThree: string;
+
+    @IsString()
     readonly summary: string;
 }
+export class FormResponseDTO {
+    readonly signatureId: string;
 
-// export class FormResponseDTO {
-//     readonly signatureid: string;
+    @ValidateNested()
+    @Type(() => SectionResponseDTO)
+    readonly selectionResponses: SectionResponseDTO[];
 
-//     @ValidateNested()
-//     @Type(() => SectionResponseDTO)
-//     readonly selectionResponses: SectionResponseDTO[];
+    @IsEmpty()
+    readonly date: string
+}
 
-//     readonly date: string
-// }
+export class UpdateEmployeeAsUserDTO {
+    @ValidateNested()
+    @Type(() => FormResponseDTO)
+    readonly formResponses: FormResponseDTO;
+
+    @IsBoolean()
+    readonly submitted: boolean;
+}

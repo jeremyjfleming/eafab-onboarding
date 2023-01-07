@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, NotFoundException, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import * as utils from "lib/utils"
 // import type { Employee } from "lib/types"
 import { ROLES } from 'lib/types';
@@ -35,15 +35,21 @@ export class EmployeeController {
     @UseGuards(JwtAuthGuard)
     @Get("/:id")
     async getOneEmployee(@Param() param, @Req() request: Request): Promise<Partial<Employee>> {
-        return await this.employeeService.getOneEmployee({userId: parseInt(param.id)})
+        let result = await this.employeeService.getOneEmployee({userId: parseInt(param.id)})
+        if (!result)
+            throw new NotFoundException()
+        return result;
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(ROLES.USER) // admins can change user contents
-    @Put(":id")
+    @Put("/:id")
     async putEmployee(@Param() param, @Req() request: Request, @Body() body: UpdateEmployeeAsUserDTO): Promise<void> {
 
-        return await this.employeeService.updateEmployee(parseInt(param.id), body)
+        let exists = await this.employeeService.getOneEmployee({ userId: parseInt(param.id)})
+        if (!exists)
+            throw new NotFoundException()
+
+        await this.employeeService.updateEmployee(parseInt(param.id), body)
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
@@ -55,8 +61,13 @@ export class EmployeeController {
 
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(ROLES.ADMIN)
-    @Delete(":id")
+    @Delete("/:id")
     async deleteEmployee(@Param() param, @Req() request: Request): Promise<void> {
+
+        let exists = await this.employeeService.getOneEmployee({ userId: parseInt(param.id)})
+        if (!exists)
+            throw new NotFoundException()
+
         await this.employeeService.deleteEmployee(parseInt(param.id));
 
     }

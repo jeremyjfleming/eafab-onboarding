@@ -12,7 +12,7 @@ export class AuthController {
     constructor(private authService: AuthService) {}
 
     @Post("/user/signin")
-    @UseGuards(JwtAuthGuard, RolesGuard)
+    @UseGuards(LocalAuthGuard, RolesGuard)
     @Roles(ROLES.USER)
     async userLogin(@Request() request): Promise<JwtResponse> {
         return this.authService.login(request.user);
@@ -20,7 +20,7 @@ export class AuthController {
 
 
     @Post("/admin/signin")
-    @UseGuards(JwtAuthGuard, RolesGuard)
+    @UseGuards(LocalAuthGuard, RolesGuard)
     @Roles(ROLES.ADMIN)
     async adminLogin(@Request() request): Promise<JwtResponse> {
         return this.authService.login(request.user);

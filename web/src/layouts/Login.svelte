@@ -22,13 +22,13 @@
         
         {#if location == "admin"}
         <div
-          class="absolute top-0 w-full h-full bg-blueGray-800 bg-no-repeat bg-full"
+          class="absolute top-0 w-full min-h-screen h-full bg-blueGray-800 bg-no-repeat bg-cover bg-fixed"
           style="background-image: url({registerBg1});"
         ></div>
           <AdminLogin/>
         {:else}
         <div
-          class="absolute top-0 w-full h-full bg-blueGray-800 bg-no-repeat bg-full"
+          class="absolute top-0 w-full min-h-screen h-full bg-blueGray-800 bg-no-repeat bg-cover bg-fixed"
           style="background-image: url({registerBg2});"
         ></div>
           <UserLogin/>

@@ -3,18 +3,70 @@
 
   // components for this layout
   import AdminNavbar from "components/Navbars/AdminNavbar.svelte";
+  import ErrorPopup from "../components/ErrorPopup.svelte";
 
-
+  import { errors, deleteUser } from "../adminStores"
+  
   // pages for this layout
   import Index from "views/admin/Index.svelte";
   import Employee from "../views/admin/Employee.svelte";
 
-  export let location;
-  export let admin = "";
+  $: deletePopup = false
+  let deleteUserId = ""
+  
+  async function deleteUserFn(userId) {
+    
+    let response = await fetch("//api.eafabsafety.com/employee/" + userId, {
+      method: "delete",
+      headers: "Bearer " + localStorage.getItem("token"),
+    })
+  
+    if (!response.ok)
+      setError("Something went wrong. Please try again later.")
+    else 
+      window.location.reload();
+  }
+
+  
+  let errorsArr = []
+  
+  errors.subscribe((value) => {
+    errorsArr = [...errorsArr, value];
+    setTimeout(() => errorsArr.length > 1 ? errorsArr.shift() : errorsArr = [], 3000)
+  })
+
+  deleteUser.subscribe((value) => {
+    deletePopup = true;
+    deleteUserId = value;
+  })
+
+
+
+  
 </script>
+
 
 <div>
   <div class="absolute bg-blueGray-100 w-full hidden md:block">
+    {#each errorsArr as error}
+    {#if error.length > 0}
+    <ErrorPopup message={error}/>
+    {/if}  
+    {/each}
+    <div class="fixed bg-transparent/50 z-20 w-full h-full top-0 left-0 overflow-hidden flex flex-col justify-center items-center {!deletePopup && "hidden" }">
+      <div class="border text-center bg-white top-1/2 p-8 rounded">
+        <h3>Are you sure you want to delete this user?</h3><br>
+          <h3>This action is irreversable.</h3>
+        <div class="flex flex-row justify-evenly my-6">
+          <button class="rounded border-2 border-blueGray-800 w-16 h-10" on:click={() => {
+            deletePopup = false;
+          }}>Cancel</button>
+          <button class="shadow-sm hover:shadow-lg transition-shadow ease-in rounded text-white bg-blueGray-800 w-16 h-10" on:click={() => {
+            deleteUserFn(deleteUserId)
+          }}>Delete</button>
+        </div>
+      </div>
+    </div>
     <AdminNavbar />
     <!-- Header -->
     <div class="relative bg-blueGray-800 md:pt-32 pb-32 pt-12 px-4 md:px-10 mx-auto w-full"/>

@@ -11,9 +11,10 @@
   }
 
   async function formSubmit(e) {
+    console.log("hit")
     let response 
     try {
-      response = await fetch("https://api.eafabsafety.com/auth/admin/signin", {
+      response = await fetch("https://api.eafabsafety.com/auth/user/signin", {
         method: 'POST',
         body: new URLSearchParams(new FormData(e.target))
       }) 
@@ -25,9 +26,9 @@
     
     // console.log(new URLSearchParams(new FormData(e.target)))
 
-    if (response.status == 401)
+    if (response.status == 401 || response.status == 403)
     {
-      setError("Username or password invalid")
+      setError("Username or Access Code invalid")
       return
     } else if (response.status !== 201)
     {
@@ -38,7 +39,7 @@
     let data = await response.json();
     localStorage.setItem("token", (data.access_token));
     localStorage.setItem("user", (data.user));
-    window.location = "/admin";
+    window.location = "/";
   }
 
 </script>
@@ -67,6 +68,7 @@
               <input
                 id="grid-email"
                 type="text"
+                name="username"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="User ID"
               />
@@ -82,6 +84,7 @@
               <input
                 id="grid-password"
                 type="password"
+                name="password"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Access Code"
               />
@@ -102,7 +105,7 @@
             <div class="text-center mt-6">
               <button
                 class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                type="button"
+                type="submit"
               >
                 Sign In
               </button>

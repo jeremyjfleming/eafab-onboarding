@@ -32,7 +32,8 @@ export class EmployeeService {
             return employee;
 
         employee.formResponses.date = this.convertDate(employee.formResponses.date);
-        return employee;
+        let { id, ...result } = employee
+        return result;
     }
 
     convertDate(isoString: string): string {
@@ -99,13 +100,15 @@ export class EmployeeService {
 
     async updateEmployee(userId: number, data: Prisma.EmployeeUpdateInput): Promise<void> {
 
+        let employee = (await prisma.employee.findUnique({
+          where: {
+            userId: userId
+          }
+        }))
+
+
         if (data.submitted === true) {
           // verify all form data is complete
-          let employee = (await prisma.employee.findUnique({
-            where: {
-              userId: userId
-            }
-          }))
 
 
     
@@ -124,16 +127,23 @@ export class EmployeeService {
             data.submitCount = submitCount;
             data.formResponses.date = date;
         
+        } else if (Math.sign(employee.submitCount) == -1) {
+            data.submitCount = employee.submitCount *-1;
         }
+        
+
+
+        if (data.hasOwnProperty("formResponses") && !data.formResponses.hasOwnProperty("date")) // bug with this prisma type where it wants a date property in every case. 
+            data.formResponses.date = "";
         try {
-            prisma.employee.update({
+            await prisma.employee.update({
                 where: {
                     userId: userId,
                 },
                 data: data
             })
         } catch (e) {
-            throw new Error()
+            throw new Error(e)
         }
     }
 
@@ -153,19 +163,27 @@ export class EmployeeService {
 
     async createEmployee({firstName, lastName}: {firstName: string, lastName: string}) {
 
-        let employee: Prisma.EmployeeCreateInput = {
-            createId: await this.getLastCreateId(),
-            userId: utils.makeId(9),
-            firstName: firstName,
-            lastName: lastName,
-            username: lastName.toLowerCase() + firstName[0].toLowerCase() + utils.makeId(3),
-            formResponses: {
-                date: '',
-                signatureId: ''
-            },
-            accessCode: utils.makeId(7).toString(),
-            submitted: false,
-            submitCount: await this.getLastSubmitCount(true)
+
+        let employee: Prisma.EmployeeCreateInput
+        try {
+            employee = {
+                createId: await this.getLastCreateId(),
+                userId: utils.makeId(9),
+                firstName: firstName,
+                lastName: lastName,
+                username: lastName.toLowerCase() + firstName[0].toLowerCase() + utils.makeId(3),
+                formResponses: {
+                    date: '',
+                    signatureId: '',
+                    sectionResponses: new Array(24).fill({questionOne: "", questionTwo: "", questionThree: "", summary: ""})
+                },
+                accessCode: utils.makeId(7).toString(),
+                submitted: false,
+                submitCount: await this.getLastSubmitCount(true)
+            }
+        } catch (e) {
+            console.log(e)
+            throw new Error()
         }
 
         
@@ -190,7 +208,7 @@ export class EmployeeService {
             let createId = employee.createId+1
             return createId
         } catch (e) {
-            throw new Error()
+            return 0
         }
     }
 

@@ -4,7 +4,7 @@
 
     let color = "light"
     let authHeader = "Bearer " + localStorage.getItem("token")
-    let started = false
+    let loaded = false
 
 
     $: employee = {};
@@ -14,10 +14,11 @@
                 method: "get",
                 headers: {"Authorization": authHeader}
             })).json();
+
+            loaded = true
         } catch (e) {
             console.log(e)
         }   
-        started = employee.formResponses.hasOwnProperty("sectionResponses")
        
     })
 
@@ -67,8 +68,8 @@
         <!-- Projects table -->
         <div class="px-10 flex flex-col gap-4 mb-10">
 
-            {#if started}
-                {#each employee.formResponse.sectionResponses as section, i}
+            {#if loaded}
+                {#each employee.formResponses.sectionResponses as section, i}
                     <h2 class="text-xl font-bold">Section {i+1}</h2>
                     <h3 class="text-md" >{questions[i][0]}</h3>
                     <p class="text-sm rounded border-2 p-2 h-20 overflow-auto">{section.questionOne}</p>
@@ -81,10 +82,10 @@
                 {/each}
 
                 {#if employee.submitted}
-                    <h3>Signature</h3>
-                    <img src="data:{employee.formResponse.signatureId}" alt="">
-                    <h3>Date Submitted</h3>
-                    <p>{employee.formResponse.date}</p>
+                    <h2 class="text-xl font-bold">Signature</h2>
+                    <img width=400 height=175 src="{employee.formResponses.signatureId}" alt="">
+                    <h2 class="text-xl font-bold">Date Submitted</h2>
+                    <p>{employee.formResponses.date}</p>
                 {/if}
             {:else}
                 <h1>not started</h1>

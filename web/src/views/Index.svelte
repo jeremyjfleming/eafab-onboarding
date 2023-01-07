@@ -5,7 +5,7 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
  import SignaturePad from "signature_pad"
   import { onMount } from "svelte";
   import clickOutside from "../clickOutside"
-
+  
   
   $: step = 1;
   
@@ -24,17 +24,20 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
         filled[i] = true;
       }
       else 
-        filled[i] = false;
+      filled[i] = false;
     }
   }
-
+  
   let signatureCanvas;
   let pad;
   let signatureImage = "";
   
+  function saveSignature() {
+    signatureImage = pad.toDataURL();
+  }
   onMount(async () => {
     try {
-      let value = await fetch("//api.eafabsafety.com/employee/" + sessionStorage.getItem("user"), {
+      let value = await fetch("//api.eafabsafety.com/employee/" + localStorage.getItem("user"), {
         headers: {
           "Authorization": authHeader
         }
@@ -59,11 +62,12 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
   let errors = new Array(24).fill("").map(() => new Array(4).fill(""));
   let padEmpty;
 
-  console.log(errors);
 
-  async function update() {
+  async function update(submitted = false) {
 
-    let sectionResponses = Array(25).fill({});
+    let sectionResponses = new Array(24).fill("").map(() => new Object());
+
+    saveSignature()
 
     for (let section in responses) {
       sectionResponses[section].questionOne = responses[section][0];
@@ -72,15 +76,27 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
       sectionResponses[section].summary = responses[section][3];
     }
 
-    await fetch("//api.eafabsafety.com/employee/" + localStorage.getItem("user"), {
-      method: "put",
-      headers: { "Authorization": authHeader},
-      body: {
+    let contents
+    if (submitted) 
+      contents = JSON.stringify({
+        submitted: true,
         formResponses: {
           signatureId: signatureImage,
           sectionResponses
         }
-      }
+      })
+    else 
+      contents = contents = JSON.stringify({
+        formResponses: {
+          signatureId: signatureImage,
+          sectionResponses
+        }
+      })
+
+    await fetch("//api.eafabsafety.com/employee/" + localStorage.getItem("user"), {
+      method: "put",
+      headers: { "Authorization": authHeader, "Content-Type": "application/json"},
+      body: contents
     })
   }
 
@@ -115,14 +131,12 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
   }
   let opacity = false;
 
-  function saveSignature() {
-    signatureImage = pad.toDataUrl();
-  }
-  $: {
-    console.log(responses);
-    console.log(errors);
+  // $: {
+  //   console.log(pad)
+  //   console.log(responses);
+  //   console.log(errors);
   
-  }
+  // }
 
 </script>
 
@@ -136,10 +150,9 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
           confirmWindow = false;
         }}>Cancel</button>
         <button class="shadow-sm hover:shadow-lg transition-shadow ease-in rounded text-white bg-blueGray-800 w-16 h-10" on:click={() => {
-          socket.send(JSON.stringify({
-            isSubmitted: true
-          }))
-          window.location = "/login"
+          update(true)
+          // window.location = "/login"
+          // localStorage.clear("token")
         }}>Submit</button>
       </div>
     </div>
@@ -243,7 +256,7 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.svelte";
                         <button class="shadow-sm hover:shadow-lg transition-shadow ease-in rounded text-white bg-blueGray-800 w-16 h-10" on:click={() => {
                           update()
                           if (!checkErrorsOnAllSteps()) {
-                            confirmWindow.show();
+                            confirmWindow = true;
                             opacity = true;
                           }
                           // confirmWindow.show();

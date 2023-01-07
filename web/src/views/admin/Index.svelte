@@ -35,7 +35,7 @@
 
     for (let i = 0; i < incompleteEmployees.length; i++) {
       let percentageCount = 0
-      for (let section in incompleteEmployees[i].formResponses.sectionResponses) {
+      for (let section of incompleteEmployees[i].formResponses.sectionResponses) {
         for (let question in section) {
           if (section[question] !== "")
             percentageCount++;
@@ -44,6 +44,7 @@
           percentageCount += 4;
       }
       percentages[i] = percentageCount;
+
   }
 
   })
@@ -96,7 +97,7 @@
     <CompleteTable>
       {#if incompleteEmployees != []}
         {#each completeEmployees as employee}
-          <CompleteElement firstName={employee.firstName} lastName={employee.lastName} completeDate={employee.formResponse.date} id={employee.userId}/>
+          <CompleteElement firstName={employee.firstName} lastName={employee.lastName} completeDate={employee.formResponses.date} id={employee.userId}/>
         {/each}
       {/if}
     </CompleteTable>

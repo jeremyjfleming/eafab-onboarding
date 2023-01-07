@@ -25,7 +25,7 @@
     
     // console.log(new URLSearchParams(new FormData(e.target)))
 
-    if (response.status == 401)
+    if (response.status == 401 || response.status == 403)
     {
       setError("Username or password invalid")
       return

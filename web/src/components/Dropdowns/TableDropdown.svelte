@@ -2,14 +2,30 @@
   // library for creating dropdown menu appear on click
   import { createPopper } from "@popperjs/core";
   import clickOutside from "../../clickOutside";
+  import { errors, deleteUser } from "../../adminStores"
 
   // core components
 
   let dropdownPopoverShow = false;
 
   export let userId = "";
+  export let isComplete = false;
   let btnDropdownRef;
   let popoverDropdownRef;
+
+  async function reopenUser() {
+    let response = await fetch("//api.eafabsafety.com/employee/" + userId, {
+      method: "put",
+      headers: {"Authorization": "Bearer " + localStorage.getItem("token")},
+      body: JSON.stringify({ submitted: false })
+    })
+
+    if (!response.ok)
+      errors.set("Something went wrong. Please try again later.")
+    else 
+      window.location.reload();
+  }
+
 
   const toggleDropdown = (event) => {
     event.preventDefault();
@@ -44,13 +60,21 @@
       View Response Data
     </a>
     <a
-      href="#pablo" on:click={(e) => e.preventDefault()}
+      href="#p" on:click
       class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
     >
       Download Response Data
     </a>
+    {#if isComplete}
+      <a
+      href="#" on:click|preventDefault={reopenUser}
+      class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+    >
+      Reopen User
+    </a>
+    {/if}
     <a
-      href="#pablo" on:click={(e) => e.preventDefault()}
+      href="#pablo" on:click|preventDefault={() => deleteUser.set(userId)}
       class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
     >
       Delete User

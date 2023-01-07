@@ -15,6 +15,7 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string): Promise<Partial<(Employee | Admin) & { role: ROLES }>> {
+    console.log("hit")
     const user = await this.employeeService.getOneEmployee({username});
     if (user && user.accessCode === password) {
       const { accessCode, ...result} = user;
