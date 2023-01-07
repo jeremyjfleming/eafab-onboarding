@@ -1,6 +1,6 @@
 import { PartialType } from "@nestjs/mapped-types";
-import { Type } from "class-transformer";
-import { IsBoolean, IsEmpty, isNotEmpty, IsNotEmpty, IsString, Max, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
+import { IsBoolean, IsEmpty, IsNotEmpty, IsString, ValidateNested } from "class-validator";
 
 export class CreateEmployeeDTO {
     
@@ -43,6 +43,6 @@ export class UpdateEmployeeAsUserDTO {
     @Type(() => FormResponseDTO)
     readonly formResponses: FormResponseDTO;
 
-    @IsBoolean()
+    @Transform(({ value }) => !!value )
     readonly submitted: boolean;
 }

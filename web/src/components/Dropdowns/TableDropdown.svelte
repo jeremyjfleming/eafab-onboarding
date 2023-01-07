@@ -3,6 +3,7 @@
   import { createPopper } from "@popperjs/core";
   import clickOutside from "../../clickOutside";
   import { errors, deleteUser } from "../../adminStores"
+  import { reopenUser } from "../../requests"
 
   // core components
 
@@ -13,18 +14,6 @@
   let btnDropdownRef;
   let popoverDropdownRef;
 
-  async function reopenUser() {
-    let response = await fetch("//api.eafabsafety.com/employee/" + userId, {
-      method: "put",
-      headers: {"Authorization": "Bearer " + localStorage.getItem("token")},
-      body: JSON.stringify({ submitted: false })
-    })
-
-    if (!response.ok)
-      errors.set("Something went wrong. Please try again later.")
-    else 
-      window.location.reload();
-  }
 
 
   const toggleDropdown = (event) => {
@@ -67,7 +56,7 @@
     </a>
     {#if isComplete}
       <a
-      href="#" on:click|preventDefault={reopenUser}
+      href="#" on:click|preventDefault={() => reopenUser(userId)}
       class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
     >
       Reopen User

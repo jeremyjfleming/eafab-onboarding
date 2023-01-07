@@ -39,7 +39,7 @@ export class EmployeeService {
     convertDate(isoString: string): string {
         if (!isoString)
             return "";
-        let iso = DateTime.fromISO(isoString);
+        let iso = DateTime.fromISO(isoString, { zone: "America/New_York" });
         return iso.toLocaleString(DateTime.DATETIME_MED);
     }
 
@@ -133,7 +133,7 @@ export class EmployeeService {
         
 
 
-        if (data.hasOwnProperty("formResponses") && !data.formResponses.hasOwnProperty("date")) // bug with this prisma type where it wants a date property in every case. 
+        if (data.hasOwnProperty("formResponses") && !data.formResponses.hasOwnProperty("date")) // when data models change 
             data.formResponses.date = "";
         try {
             await prisma.employee.update({

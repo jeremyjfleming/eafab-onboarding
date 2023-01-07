@@ -6,6 +6,7 @@
   import ErrorPopup from "../components/ErrorPopup.svelte";
 
   import { errors, deleteUser } from "../adminStores"
+  import { deleteUser as deleteUserReq } from "../requests";
   
   // pages for this layout
   import Index from "views/admin/Index.svelte";
@@ -13,19 +14,6 @@
 
   $: deletePopup = false
   let deleteUserId = ""
-  
-  async function deleteUserFn(userId) {
-    
-    let response = await fetch("//api.eafabsafety.com/employee/" + userId, {
-      method: "delete",
-      headers: "Bearer " + localStorage.getItem("token"),
-    })
-  
-    if (!response.ok)
-      setError("Something went wrong. Please try again later.")
-    else 
-      window.location.reload();
-  }
 
   
   let errorsArr = []
@@ -62,7 +50,7 @@
             deletePopup = false;
           }}>Cancel</button>
           <button class="shadow-sm hover:shadow-lg transition-shadow ease-in rounded text-white bg-blueGray-800 w-16 h-10" on:click={() => {
-            deleteUserFn(deleteUserId)
+            deleteUserReq(deleteUserId)
           }}>Delete</button>
         </div>
       </div>
