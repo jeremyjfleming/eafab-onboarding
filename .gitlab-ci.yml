@@ -1,0 +1,13 @@
+staging:
+  stage: deploy
+  script:
+    - apt-get update -yq
+    - apt-get install -y nodejs npm
+    - gem install dpl
+    - cd api
+    - dpl --provider=heroku --app=eafabsafety-api --api_key=$HEROKU_STAGING_API_KEY
+    - cd web
+    - dpl --provider=heroku --app=eafabsafety-web --api_key=$HEROKU_STAGING_API_KEY
+  only:
+    - main
+  environment: staging
