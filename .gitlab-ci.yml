@@ -2,7 +2,7 @@ staging:
   stage: deploy
   script:
     - apt-get update -yq
-    - apt-get install -y ruby-dev
+    - apt-get install -y ruby-dev=2.6
     - gem install dpl
     - cd api
     - dpl --provider=heroku --app=eafabsafety-api --api_key=$HEROKU_STAGING_API_KEY
