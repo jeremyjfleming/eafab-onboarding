@@ -14,7 +14,7 @@ COPY ./prisma .
 
 RUN npm install
 
-COPY . .
+COPY ./ ./
 
 RUN npm run prisma:generate
 
