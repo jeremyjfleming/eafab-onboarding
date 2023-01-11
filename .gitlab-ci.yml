@@ -1,3 +1,7 @@
+default:
+  interruptible: false
+  image: ruby:3.0
+  
 staging:
   stage: deploy
   script:
