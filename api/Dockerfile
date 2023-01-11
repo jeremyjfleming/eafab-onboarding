@@ -2,15 +2,15 @@ FROM node:18.12.1-bullseye
 
 WORKDIR /app
 
-COPY ./package*.json .
+COPY ./package*.json ./
 
-COPY ./tsconfig*.json .
+COPY ./tsconfig*.json ./
 
-COPY ./nest-cli.json .
+COPY ./nest-cli.json ./
 
 COPY .env ./
 
-COPY ./prisma .
+COPY ./prisma ./
 
 RUN npm install
 
