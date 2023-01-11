@@ -3,6 +3,7 @@ staging:
   script:
     - apt-get update -yq
     - apt-get install -y ruby-full
+    - gem install faraday-net_http -v 2.1.0
     - gem install dpl
     - cd api
     - dpl --provider=heroku --app=eafabsafety-api --api_key=$HEROKU_STAGING_API_KEY
