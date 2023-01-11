@@ -9,7 +9,7 @@ staging:
     - gem install dpl
     - cd api
     - dpl --provider=heroku --app=eafabsafety-api --api_key=$HEROKU_STAGING_API_KEY
-    - cd web
+    - cd ../web
     - dpl --provider=heroku --app=eafabsafety-web --api_key=$HEROKU_STAGING_API_KEY
   only:
     - main
