@@ -19,42 +19,29 @@ type SectionResponses {
   summary String
 }
 
-model FormResponse {
-  id String @id @map("_id") @default(auto()) @db.ObjectId
-  index Int @unique
-  author User @relation(fields: [authorId], references: [id])
-  authorId String @db.ObjectId @unique
+type FormResponse {
   date String
   sectionResponses SectionResponses[]
   signatureId String
 }
 
-enum Role {
-  USER 
-  ADMIN
+
+model Employee {
+  id String @id @map("_id") @default(auto()) @db.ObjectId
+  createId Int @unique
+  userId Int @unique
+  firstName String
+  lastName String
+  username String @unique
+  formResponses FormResponse
+  accessCode String @unique
+  submitted Boolean
+  submitCount Int @unique
 }
 
-
-// model Employee {
-//   id String @id @map("_id") @default(auto()) @db.ObjectId
-//   createId Int @unique
-//   userId Int @unique
-//   firstName String
-//   lastName String
-//   username String @unique
-//   formResponses FormResponse
-//   accessCode String
-//   submitted Boolean
-//   submitCount Int @unique
-// }
-
-model User {
+model Admin {
   id String @id @map("_id") @default(auto()) @db.ObjectId
-  index Int @unique
-  role Role
-  firstName String?
-  lastName String?
+  userId Int @unique
   username String @unique
   password String
-  response FormResponse?
 }
