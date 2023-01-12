@@ -148,10 +148,8 @@ export class EmployeeService {
     }
 
     async deleteEmployee(userId: number) {
-
-        prisma.$connect();
         try {
-            prisma.employee.delete({
+            await prisma.employee.delete({
                 where: {
                     userId: userId
                 }
