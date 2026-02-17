@@ -40,9 +40,9 @@
           if (section[question] !== "")
             percentageCount++;
         }
-        if (incompleteEmployees[i].formResponses.signatureId !== "")
-          percentageCount += 4;
       }
+      if (incompleteEmployees[i].formResponses.signatureId !== "")
+        percentageCount += 4;
       percentages[i] = percentageCount;
 
   }
